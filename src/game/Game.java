@@ -1,12 +1,10 @@
 package game;
 
-import painting.Main;
-
 import javax.swing.*;
 
-public class NurikabeGame {
+public class Game {
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(NurikabeGame::createAndShowGUI);
+        SwingUtilities.invokeLater(Game::createAndShowGUI);
     }
     private static void createAndShowGUI() {
         System.out.println("Created GUI on EDT? " +
@@ -16,10 +14,11 @@ public class NurikabeGame {
         f.setSize(250, 250);
         f.setVisible(true);
     }
-    private void saveGameStatus(){}
-    private void loadGameStatus(){}
-    private void stepBack(){}
-    private void start(){
+    public void saveGameStatus(){}
+    public void loadGameStatus(){}
+    public void undoMove(){}
+    public void uploadSolution(){}
+    public void start(){
 
     }
 

@@ -1,10 +1,11 @@
 package game;
 
-public class NurikabeCell {
+public class Cell {
     private final int k;
     private Integer state;
+    public int[][] coordinates;
 
-    public NurikabeCell(int k, int state) {
+    public Cell(int k, int state) {
         this.k = k;
         this.state = state;
     }

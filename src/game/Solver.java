@@ -1,19 +1,19 @@
 package game;
 
-public class NurikabeSolver {
-    private void changeStateOfCell(){
+public class Solver {
+    private void changeCellState(){
 
     }
     private void changeCell(){
 
     }
     private void checkConditions(){
-        islandSizeChecker();
+        checkIslandSizes();
         checkForBlackSquare();
         checkWhitePerdurance();
         checkBlackPerdurance();
     }
-    private void islandSizeChecker(){
+    private void checkIslandSizes(){
 
     }
     private void checkForBlackSquare(){
@@ -25,7 +25,8 @@ public class NurikabeSolver {
     private void checkWhitePerdurance(){
 
     }
-
+    public void Solve(){}
+    public void Compare(){}
 
     public static void main(String[] args) {
 
