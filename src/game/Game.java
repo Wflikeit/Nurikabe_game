@@ -21,5 +21,13 @@ public class Game {
     public void start(){
 
     }
+    public void showMenuPanel(){
+
+    }
+    public void showGamePanel(){}
+    public void showLevelChoosing(){}
+    public void pause(){}
+    public void showSolution(){}
+    public void clearBoard(){}
 
 }

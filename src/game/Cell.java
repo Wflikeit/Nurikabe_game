@@ -17,25 +17,11 @@ public class Cell {
             return false;
         }
     }
-
-    public void isBlack() {
-    }
-
-    public void isBlank() {
-
-    }
-
-    private void containNumber() {
-    }
-
     public int getK() {
         return k;
     }
 
     public Integer getState() {
-        isBlank();
-        isBlack();
-        isWhite();
 
         return state;
     }
