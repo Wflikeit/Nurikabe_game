@@ -22,7 +22,7 @@ public class Main extends JFrame {
         Menu menuPanel = new Menu(this);
 
         menuPanel.setLayout(cardLayout);
-        LevelChoosing levelChoosing = new LevelChoosing();
+        LevelChoosing levelChoosing = new LevelChoosing(this);
         GamePanel gamePanel = new GamePanel();
 
         cardPanel.add(menuPanel, "menu");

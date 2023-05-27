@@ -28,36 +28,21 @@ public class Menu extends JPanel{
         JButton loadGameButton = new JButton("Load Game");
         JButton exitButton = new JButton("Quit Game");
         JLabel welcomingText = new JLabel("NURIKABE GAME");
-
-        Color buttonColor2 = new Color(0x86B38F);
-        Color Color3 = new Color(0xC2CDFF);
-        Color buttonColor = new Color(0x8694B3);
-        Color Color4 = new Color(0xFFF7EF);
-        Color Color5 = new Color(0x8E8AB3);
         Dimension buttonSize = new Dimension(500, 100);
         Font Font1 = new Font("Font1", Font.BOLD, 28);
 
-        setBackground(Color4);
+        setBackground(Color.BLACK);
 
+        ButtonUtils.prepareButtons(newGameButton);
+        ButtonUtils.prepareButtons(loadGameButton);
+        ButtonUtils.prepareButtons(exitButton);
+        ButtonUtils.prepareButtons(newGameButton);
 
-
-        newGameButton.setPreferredSize(buttonSize);
-        loadGameButton.setPreferredSize(buttonSize);
-        exitButton.setPreferredSize(buttonSize);
-
-        newGameButton.setBackground(buttonColor);
-        loadGameButton.setBackground(buttonColor);
-        exitButton.setBackground(buttonColor);
-
+        welcomingText.setForeground(ColorsEnum.BUTTON_COLOR.getColor());
         welcomingText.setHorizontalAlignment(SwingConstants.CENTER);
-        newGameButton.setForeground(Color.BLACK);
-        loadGameButton.setForeground(Color.BLACK);
-        exitButton.setForeground(Color.BLACK);
 
         welcomingText.setFont(new Font("Font1", Font.PLAIN, 64));
-        newGameButton.setFont(Font1);
-        exitButton.setFont(Font1);
-        loadGameButton.setFont(Font1);
+
 
         newGameButton.addActionListener(new ActionListener() {
             @Override
