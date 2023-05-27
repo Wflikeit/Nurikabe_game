@@ -6,35 +6,40 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Menu extends JPanel{
+    private Main mainInstance;
+
     private void start(){
 
     }
     private void chooseSettings(){}
     private void chooseFile(){}
 
-    private Main mainInstance;
 
 
-    public Menu() {
+    public Menu(Main mainInstance) {
         setLayout(new BorderLayout());
+
+        this.mainInstance = mainInstance;
 
 
         Container container = new Container();
 
-        JButton newGameButton = new JButton("Nowa gra");
-        JButton loadGameButton = new JButton("Wczytaj grę");
-        JButton exitButton = new JButton("Wyjdź");
+        JButton newGameButton = new JButton("New Game");
+        JButton loadGameButton = new JButton("Load Game");
+        JButton exitButton = new JButton("Quit Game");
         JLabel welcomingText = new JLabel("NURIKABE GAME");
 
         Color buttonColor2 = new Color(0x86B38F);
-        Color buttonColor = new Color(0x8694B3);
         Color Color3 = new Color(0xC2CDFF);
+        Color buttonColor = new Color(0x8694B3);
         Color Color4 = new Color(0xFFF7EF);
         Color Color5 = new Color(0x8E8AB3);
         Dimension buttonSize = new Dimension(500, 100);
         Font Font1 = new Font("Font1", Font.BOLD, 28);
 
         setBackground(Color4);
+
+
 
         newGameButton.setPreferredSize(buttonSize);
         loadGameButton.setPreferredSize(buttonSize);
@@ -58,7 +63,7 @@ public class Menu extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Rozpoczęcie nowej gry...");
-                mainInstance.showMenuPanel();
+                mainInstance.showLevelChoosing(); // Wywołanie metody showLevelChoosing() na obiekcie Main
             }
         });
 
@@ -114,14 +119,6 @@ public class Menu extends JPanel{
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Menu Nurikabe");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        Menu menuPanel = new Menu();
-        frame.getContentPane().add(menuPanel, BorderLayout.CENTER);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
 
     }
 

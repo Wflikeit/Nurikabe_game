@@ -2,7 +2,7 @@ package game;
 
 import javax.swing.*;
 import java.awt.*;
-
+import java.io.File;
 
 public class Main extends JFrame {
     private final JPanel cardPanel;
@@ -14,21 +14,20 @@ public class Main extends JFrame {
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
         setSize(800, 600);
+        ImageIcon appLogo = new ImageIcon("src/gameResources/nurikabe.png");
+        setIconImage(appLogo.getImage());
+        this.setBackground(Color.BLACK);
 
         setLocationRelativeTo(null);
+        Menu menuPanel = new Menu(this);
 
-//
-//        NurikabeMenu menuPanel = new NurikabeMenu();
-//        menuPanel.setMainInstance(this);
-//
-////        TablescorePanel tablescorePanel = new TablescorePanel();
-//        NurikabeMainWindow gamePanel = new NurikabeMainWindow();
-//
-//
-//        cardPanel.add(menuPanel, "menu");
-//        cardPanel.add(tablescorePanel, "tablescore");
-//        cardPanel.add(gamePanel, "game");
+        menuPanel.setLayout(cardLayout);
+        LevelChoosing levelChoosing = new LevelChoosing();
+        GamePanel gamePanel = new GamePanel();
 
+        cardPanel.add(menuPanel, "menu");
+        cardPanel.add(levelChoosing, "levelChoosing");
+        cardPanel.add(gamePanel, "gamePanel");
         add(cardPanel);
     }
 
@@ -36,12 +35,8 @@ public class Main extends JFrame {
         cardLayout.show(cardPanel, "menu");
     }
 
-    public void showTablescorePanel() {
-//        cardLayout.show(tablescorePanel, "tablescore");
-    }
-
-    public void showGamePanel() {
-//        cardLayout.show(gamePanel, "game");
+    public void showLevelChoosing() {
+        cardLayout.show(cardPanel, "levelChoosing");
     }
 
     public static void main(String[] args) {
@@ -51,4 +46,3 @@ public class Main extends JFrame {
         });
     }
 }
-

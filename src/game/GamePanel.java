@@ -1,7 +1,9 @@
 package game;
 
-public class GamePanel {
-    public GamePanel(Board board){
+import javax.swing.*;
+
+public class GamePanel extends JPanel {
+    public GamePanel(){
 
     }
 }
