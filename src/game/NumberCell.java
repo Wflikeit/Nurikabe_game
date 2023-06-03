@@ -1,7 +1,14 @@
 package game;
 
-public class NumberCell {
-    public int value;
+import java.awt.*;
+
+public class NumberCell extends Cell{
+    public NumberCell(Point loc, int state, String value) {
+        super(loc, state);
+        this.value = value;
+    }
+
+    public String value;
     public void isAreaEqualToValue(){}
-    public int[][] coordinates;
+    public Point coordinates;
 }

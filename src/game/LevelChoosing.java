@@ -77,6 +77,13 @@ public class LevelChoosing extends JPanel {
                 mainInstance.showMenuPanel();
             }
         });
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Starting the game...");
+                mainInstance.showGamePanel();
+            }
+        });
 
 
     }

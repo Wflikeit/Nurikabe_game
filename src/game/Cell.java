@@ -1,31 +1,35 @@
 package game;
 
-public class Cell {
-    private final int k;
-    private Integer state;
-    public int[][] coordinates;
+import java.awt.*;
 
-    public Cell(int k, int state) {
-        this.k = k;
+public class Cell {
+    private final Point loc;
+    private Integer state;
+
+    public Cell(Point loc, int state) {
+        this.loc = loc;
         this.state = state;
     }
 
     public boolean isWhite() {
-        if (this.state.equals('0')) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.state.equals(2);
     }
-    public int getK() {
-        return k;
+
+    public boolean isBlack() {
+        return this.state.equals(1);
+    }
+
+    public boolean isBlank() {
+        return this.state.equals(0);
+    }
+
+    public Point getLoc() {
+        return loc;
     }
 
     public Integer getState() {
-
-        return state;
+        return this.state;
     }
-
     public void setState(Integer state) {
         this.state = state;
     }

@@ -2,7 +2,7 @@ package game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
+import java.util.List;
 
 public class Main extends JFrame {
     private final JPanel cardPanel;
@@ -23,12 +23,19 @@ public class Main extends JFrame {
 
         menuPanel.setLayout(cardLayout);
         LevelChoosing levelChoosing = new LevelChoosing(this);
-        GamePanel gamePanel = new GamePanel();
+        Board board = new Board(6); // Create an instance of the Board class
+        board.createBoard();
+        // Populate the board and retrieve the nurikabeBoardPanel list
+        GamePanel gamePanel = new GamePanel(this, board);
 
         cardPanel.add(menuPanel, "menu");
         cardPanel.add(levelChoosing, "levelChoosing");
         cardPanel.add(gamePanel, "gamePanel");
         add(cardPanel);
+    }
+
+    public void showGamePanel() {
+        cardLayout.show(cardPanel, "gamePanel");
     }
 
     public void showMenuPanel() {
