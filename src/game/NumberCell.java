@@ -8,7 +8,15 @@ public class NumberCell extends Cell{
         this.value = value;
     }
 
+    @Override
+    public Point getLoc() {
+        return super.getLoc();
+    }
+    public String getValue(){
+        return value;
+    }
+
     public String value;
     public void isAreaEqualToValue(){}
-    public Point coordinates;
+    public Point coordinates ;
 }

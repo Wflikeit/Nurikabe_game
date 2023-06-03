@@ -45,6 +45,8 @@
                         }
                         case 3:{
                             square.setColor(ColorsEnum.BUTTON_COLOR_2.getColor());
+                            JButton button1 = new JButton(board.numbList.get(1).getValue());
+                            square.add(button1);
                             break;
                         }
 

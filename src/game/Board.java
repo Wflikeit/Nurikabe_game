@@ -74,6 +74,17 @@ public class Board {
             mergeSigleToOne();
         }
         assignNumbers();
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++) {
+                for (int k = 0; k < numbList.size(); k++) {
+                    if (numbList.get(k).getLoc().x == nurikabeBoardPanel.get(i * size + j).getLoc().x &&
+                            numbList.get(k).getLoc().y == nurikabeBoardPanel.get(i * size + j).getLoc().y) {
+                        nurikabeBoardPanel.get(i * size + j).setState(3);
+
+                    }
+                }
+            }
+        }
     }
 
     public void setLevel(String level) {
@@ -256,10 +267,10 @@ public class Board {
 
     private void fixBigWhiteArea() {
         List<AbstractMap.SimpleEntry<Integer, List<Integer>>> areas = countWhiteAreaSizes();
-        for (int i = 0; i < areas.size(); i++) {
-            if (areas.get(i).getKey() > 0.8 * size || areas.get(i).getKey() > 13) {
-                for (int j = 0; j < areas.get(i).getValue().size(); j++) {
-                    nurikabeBoardPanel.get(areas.get(i).getValue().get(j)).setState(0);
+        for (AbstractMap.SimpleEntry<Integer, List<Integer>> area : areas) {
+            if (area.getKey() > 0.8 * size || area.getKey() > 13) {
+                for (int j = 0; j < area.getValue().size(); j++) {
+                    nurikabeBoardPanel.get(area.getValue().get(j)).setState(0);
                 }
             }
         }
@@ -268,9 +279,9 @@ public class Board {
     private int maxSize() {
         int max = 0;
         List<AbstractMap.SimpleEntry<Integer, List<Integer>>> areas = countWhiteAreaSizes();
-        for (int i = 0; i < areas.size(); i++) {
-            if (areas.get(i).getKey() > max) {
-                max = areas.get(i).getKey();
+        for (AbstractMap.SimpleEntry<Integer, List<Integer>> area : areas) {
+            if (area.getKey() > max) {
+                max = area.getKey();
             }
         }
         return max;
@@ -292,15 +303,16 @@ public class Board {
 
     private void assignNumbers() {
         List<AbstractMap.SimpleEntry<Integer, List<Integer>>> areas = countWhiteAreaSizes();
-        for (int i = 0; i < areas.size(); i++) {
-            int index = areas.get(i).getValue().get(ThreadLocalRandom.current().nextInt(areas.get(i).getValue().size()));
-            int value = areas.get(i).getKey();
+        for (AbstractMap.SimpleEntry<Integer, List<Integer>> area : areas) {
+            int index = area.getValue().get(ThreadLocalRandom.current().nextInt(area.getValue().size()));
+            int value = area.getKey();
             Point coordinates = nurikabeBoardPanel.get(index).getLoc();
             NumberCell numC = new NumberCell(coordinates, 3, Integer.toString(value));
             numbList.add(numC);
-            nurikabeBoardPanel.get(index).setState(3);
+
         }
     }
+
     private boolean checkCohesion() {
         int counter;
         List<Integer> black = new ArrayList<>();
