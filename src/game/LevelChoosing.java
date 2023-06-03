@@ -6,11 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LevelChoosing extends JPanel {
-    private Main mainInstance;
 
     public LevelChoosing(Main mainInstance) {
         JLabel welcomingText = new JLabel("Choose Level");
-        this.mainInstance = mainInstance;
 
         ImageIcon imageIcon = new ImageIcon("src/gameResources/nurikabe.png");
 
@@ -22,8 +20,6 @@ public class LevelChoosing extends JPanel {
         JButton button2 = new JButton("Hard");
         JButton button3 = new JButton("Hell");
         JButton button4 = new JButton("Menu");
-
-        Font Font1 = new Font("Font1", Font.BOLD, 28);
 
 
         ButtonUtils.prepareButtons(button1);
@@ -71,18 +67,8 @@ public class LevelChoosing extends JPanel {
 
 
         add(panel1, BorderLayout.CENTER);
-        button4.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainInstance.showMenuPanel();
-            }
-        });
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Starting the game...");
-                mainInstance.showGamePanel();
-            }
+        button4.addActionListener(e -> mainInstance.showMenuPanel());
+        button1.addActionListener(e -> {mainInstance.showGamePanel();
         });
 
 

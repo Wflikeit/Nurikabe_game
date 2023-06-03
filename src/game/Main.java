@@ -24,7 +24,6 @@ public class Main extends JFrame {
         menuPanel.setLayout(cardLayout);
         LevelChoosing levelChoosing = new LevelChoosing(this);
         Board board = new Board(6); // Create an instance of the Board class
-        board.createBoard();
         // Populate the board and retrieve the nurikabeBoardPanel list
         GamePanel gamePanel = new GamePanel(this, board);
 

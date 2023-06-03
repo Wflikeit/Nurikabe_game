@@ -2,8 +2,7 @@ package game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class Menu extends JPanel{
     private Main mainInstance;
@@ -28,8 +27,6 @@ public class Menu extends JPanel{
         JButton loadGameButton = new JButton("Load Game");
         JButton exitButton = new JButton("Quit Game");
         JLabel welcomingText = new JLabel("NURIKABE GAME");
-        Dimension buttonSize = new Dimension(500, 100);
-        Font Font1 = new Font("Font1", Font.BOLD, 28);
 
         setBackground(Color.BLACK);
 
@@ -44,27 +41,14 @@ public class Menu extends JPanel{
         welcomingText.setFont(new Font("Font1", Font.PLAIN, 64));
 
 
-        newGameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Rozpoczęcie nowej gry...");
-                mainInstance.showLevelChoosing(); // Wywołanie metody showLevelChoosing() na obiekcie Main
-            }
+        newGameButton.addActionListener(e -> {
+            System.out.println("Rozpoczęcie nowej gry...");
+            mainInstance.showLevelChoosing(); // Wywołanie metody showLevelChoosing() na obiekcie Main
         });
 
-        loadGameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Wczytywanie gry...");
-            }
-        });
+        loadGameButton.addActionListener(e -> System.out.println("Wczytywanie gry..."));
 
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        exitButton.addActionListener(e -> System.exit(0));
 
 
 
