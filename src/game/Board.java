@@ -74,17 +74,7 @@ public class Board {
             mergeSigleToOne();
         }
         assignNumbers();
-        for (int i = 0; i < this.size; i++) {
-            for (int j = 0; j < this.size; j++) {
-                for (int k = 0; k < numbList.size(); k++) {
-                    if (numbList.get(k).getLoc().x == nurikabeBoardPanel.get(i * size + j).getLoc().x &&
-                            numbList.get(k).getLoc().y == nurikabeBoardPanel.get(i * size + j).getLoc().y) {
-                        nurikabeBoardPanel.get(i * size + j).setState(3);
 
-                    }
-                }
-            }
-        }
     }
 
     public void setLevel(String level) {
@@ -302,13 +292,12 @@ public class Board {
     }
 
     private void assignNumbers() {
-        List<AbstractMap.SimpleEntry<Integer, List<Integer>>> areas = countWhiteAreaSizes();
+    List<AbstractMap.SimpleEntry<Integer, List<Integer>>> areas = countWhiteAreaSizes();
         for (AbstractMap.SimpleEntry<Integer, List<Integer>> area : areas) {
             int index = area.getValue().get(ThreadLocalRandom.current().nextInt(area.getValue().size()));
             int value = area.getKey();
-            Point coordinates = nurikabeBoardPanel.get(index).getLoc();
-            NumberCell numC = new NumberCell(coordinates, 3, Integer.toString(value));
-            numbList.add(numC);
+            nurikabeBoardPanel.get(index).setValue(Integer.toString(value));
+
 
         }
     }
@@ -413,5 +402,16 @@ public class Board {
 
     public void saveBoard() {
     }
+
+    public void print() {
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++) {
+                System.out.print(nurikabeBoardPanel.get(i * size + j).getState());
+                System.out.print("  ");
+            }
+            System.out.print("\n");
+        }
+    }
+
 
 }

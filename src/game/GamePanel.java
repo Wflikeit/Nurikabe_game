@@ -39,16 +39,25 @@
                             break;
                         }
 
-                        case 1,2: {
+                        case 1: {
                             square.setColor(Color.WHITE);
                             break;
                         }
-                        case 3:{
-                            square.setColor(ColorsEnum.BUTTON_COLOR_2.getColor());
-                            JButton button1 = new JButton(board.numbList.get(1).getValue());
-                            square.add(button1);
+                        case 2: {
+                            square.setColor(Color.WHITE);
+                            if (board.nurikabeBoardPanel.get(i * gridSize + j).getValue() != null){
+                                square.setColor(ColorsEnum.BUTTON_COLOR_2.getColor());
+                                JButton button1 = new JButton(board.nurikabeBoardPanel.get(i * gridSize + j).getValue());
+                                square.add(button1);
+                            }
                             break;
                         }
+//                        case 3:{
+//                            square.setColor(ColorsEnum.BUTTON_COLOR_2.getColor());
+//                            JButton button1 = new JButton(board.numbList.get(1).getValue());
+//                            square.add(button1);
+//                            break;
+//                        }
 
                     }
                     square.addMouseListener(new SquareClickListener(square));

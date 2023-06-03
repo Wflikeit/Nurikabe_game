@@ -32,6 +32,7 @@ public class Main extends JFrame {
         cardPanel.add(levelChoosing, "levelChoosing");
         cardPanel.add(gamePanel, "gamePanel");
         add(cardPanel);
+        board.print();
     }
 
     public void showGamePanel() {

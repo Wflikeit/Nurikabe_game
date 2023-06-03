@@ -5,10 +5,15 @@ import java.awt.*;
 public class Cell {
     private final Point loc;
     private Integer state;
+    private String value;
 
     public Cell(Point loc, int state) {
         this.loc = loc;
         this.state = state;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public boolean isWhite() {
@@ -30,6 +35,10 @@ public class Cell {
     public Integer getState() {
         return this.state;
     }
+    public String getValue() {
+        return this.value;
+    }
+
     public void setState(Integer state) {
         this.state = state;
     }
