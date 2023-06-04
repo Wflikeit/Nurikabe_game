@@ -11,9 +11,11 @@ import java.util.Objects;
 public class GamePanel extends JPanel {
     private final Main mainInstance;
     private final java.util.List<Cell> nurikabeBoardPanel;
-    Board board;
     int gridSize = 6;
-    private JLabel timerLabel;
+    public final JLabel timerLabel;
+    public Boolean timerFlag;
+    public Timer timer;
+    public TimerListener timerListener;
 
 
     private long startTime;
@@ -28,15 +30,16 @@ public class GamePanel extends JPanel {
 
         createSquares(board_panel);
 
+        timerListener = new TimerListener(); // Initialize the timerListener field
         this.mainInstance = mainInstance;
 
-        Timer timer = new Timer(1, new TimerListener());
+        timer = new Timer(1, timerListener);
+        timerFlag = true;
         buttons_panel.setLayout(new FlowLayout());
         buttons_panel.setBackground(Color.BLACK);
         timerLabel = new JLabel("00:00:00:00"); // Assign to the class-level field
         timerLabel.setFont(new Font("Nunito", Font.PLAIN, 88));
         startTime = System.currentTimeMillis();
-
         ImageIcon stepBackIconOriginal = new ImageIcon("src/gameResources/left-arrow.png");
         Image stepBackIconImage = stepBackIconOriginal.getImage().getScaledInstance(75, 75,
                 Image.SCALE_SMOOTH); // Specify the desired width and height
@@ -58,8 +61,6 @@ public class GamePanel extends JPanel {
         saveGameButton.setBackground(Color.BLACK);
 
 
-        timer.start();
-
         buttons_panel.add(timerLabel);
         buttons_panel.add(stepBackButton);
         buttons_panel.add(saveGameButton);
@@ -69,8 +70,9 @@ public class GamePanel extends JPanel {
         add(buttons_panel, BorderLayout.NORTH);
 
         stepBackButton.addActionListener(e -> {
-            timer.stop();
-            timerLabel.setText("00:00:00:00");
+            timerFlag = false;
+            System.out.println(timerFlag);
+            timerListener.stopTimer();
             mainInstance.showMenuPanel();
         });
         saveGameButton.addActionListener(e -> System.out.println("Saving the game to the file!"));
@@ -132,7 +134,6 @@ public class GamePanel extends JPanel {
         public SquareClickListener(Square square) {
             this.square = square;
         }
-
         @Override
         public void mousePressed(MouseEvent e) {
             if (square.color == Color.WHITE) {
@@ -145,7 +146,13 @@ public class GamePanel extends JPanel {
         }
     }
 
-    private class TimerListener implements ActionListener {
+    public class TimerListener implements ActionListener {
+        private long startTime;
+
+        public TimerListener() {
+            startTime = System.currentTimeMillis();
+        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
             // Calculate the elapsed time
@@ -156,12 +163,22 @@ public class GamePanel extends JPanel {
             long hours = elapsedTime / (1000 * 60 * 60);
             long minutes = (elapsedTime / (1000 * 60)) % 60;
             long seconds = (elapsedTime / 1000) % 60;
-            long miliseconds = (elapsedTime) % 60;
-            String formattedTime = String.format("%02d:%02d:%02d:%02d", hours, minutes, seconds, miliseconds);
+            long milliseconds = elapsedTime % 1000;
+            String formattedTime = String.format("%02d:%02d:%02d:%03d", hours, minutes, seconds, milliseconds);
 
             // Update the timer label
             timerLabel.setText(formattedTime);
         }
+
+        public void startTimer() {
+            startTime = System.currentTimeMillis();
+            timer.start();
+        }
+
+        public void stopTimer() {
+            timer.stop();
+        }
     }
+
 }
 

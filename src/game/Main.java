@@ -7,6 +7,8 @@ public class Main extends JFrame {
     private final JPanel cardPanel;
     private final CardLayout cardLayout;
     private final LevelChoosing levelChoosing; // Declare the custom levelChoosing object
+    private GamePanel gamePanel;
+    private Timer timer;
 
 
     public Main() {
@@ -26,13 +28,17 @@ public class Main extends JFrame {
         levelChoosing = new LevelChoosing(this);
         Board board = new Board(6, "easy"); // Create an instance of the Board class
         // Populate the board and retrieve the nurikabeBoardPanel list
-        startGame(board);
-        GamePanel gamePanel = new GamePanel(this, board.nurikabeBoardPanel);
+        board.createBoard();
+        gamePanel = new GamePanel(this, board.nurikabeBoardPanel);
+        Timer timer =new Timer(1, gamePanel.new TimerListener());
+        startGame(gamePanel);
         cardPanel.add(menuPanel, "menu");
         cardPanel.add(levelChoosing, "levelChoosing");
         cardPanel.add(gamePanel, "gamePanel");
         add(cardPanel);
         board.print();
+        gamePanel.timerListener.startTimer();
+
     }
 
     public static void main(String[] args) {
@@ -43,6 +49,7 @@ public class Main extends JFrame {
     }
 
     public void showGamePanel() {
+        startGame(gamePanel);
         cardLayout.show(cardPanel, "gamePanel");
     }
 
@@ -54,10 +61,10 @@ public class Main extends JFrame {
         cardLayout.show(cardPanel, "levelChoosing");
     }
 
-    public void startGame(Board board ) {
+    public void startGame(GamePanel gamePanel) {
 //        levelChoosing.getLevel()
 //        String level = levelChoosing.getLevel();
-        board.createBoard();
+        gamePanel.timerListener.startTimer();
 
     }
 }

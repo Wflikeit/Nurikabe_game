@@ -9,7 +9,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Board {
     private final int size;
     private final String level;
-    public List<NumberCell> numbList = new ArrayList<>();
     List<Cell> nurikabeBoardPanel = new ArrayList<>();
     /**
      * limit of one sized "islands" - it is indicator of difficulty level
