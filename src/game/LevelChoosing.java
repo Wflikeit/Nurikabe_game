@@ -6,10 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LevelChoosing extends JPanel {
+    private String level = null;
 
     public LevelChoosing(Main mainInstance) {
         JLabel welcomingText = new JLabel("Choose Level");
-
         ImageIcon imageIcon = new ImageIcon("src/gameResources/nurikabe.png");
 
         setLayout(new BorderLayout());
@@ -67,10 +67,19 @@ public class LevelChoosing extends JPanel {
 
 
         add(panel1, BorderLayout.CENTER);
-        button4.addActionListener(e -> mainInstance.showMenuPanel());
-        button1.addActionListener(e -> {mainInstance.showGamePanel();
+        button4.addActionListener(e ->
+                mainInstance.showMenuPanel()
+
+        );
+        button1.addActionListener(e -> {
+            level = "easy";
+            mainInstance.showGamePanel();
         });
 
+    }
+
+    public String getLevel(){
+        return level;
 
     }
 

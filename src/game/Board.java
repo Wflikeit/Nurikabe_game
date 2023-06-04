@@ -8,6 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Board {
     private final int size;
+    private final String level;
     public List<NumberCell> numbList = new ArrayList<>();
     List<Cell> nurikabeBoardPanel = new ArrayList<>();
     /**
@@ -20,18 +21,20 @@ public class Board {
      * 1 - means that a cell is black
      * 2 - means that a cell is white
      */
-    public Board(int size) {
+    public Board(int size, String level) {
         this.size = size;
+        this.level = level;
+
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
                 nurikabeBoardPanel.add(new Cell(new Point(i, j), 0));
             }
         }
-        setLevel("easy");
+//        setLevel(level);
     }
 
     public static void main(String[] args) {
-        Board board = new Board(15);
+        Board board = new Board(15, "easy");
         board.setLevel("easy");
         board.createBoard();
     }
@@ -413,5 +416,7 @@ public class Board {
         }
     }
 
-
+    public int getOneLimit() {
+        return oneLimit;
+    }
 }

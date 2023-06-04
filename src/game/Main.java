@@ -2,11 +2,12 @@ package game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class Main extends JFrame {
     private final JPanel cardPanel;
     private final CardLayout cardLayout;
+    private final LevelChoosing levelChoosing; // Declare the custom levelChoosing object
+
 
     public Main() {
         setTitle("Nurikabe Game");
@@ -22,16 +23,23 @@ public class Main extends JFrame {
         Menu menuPanel = new Menu(this);
 
         menuPanel.setLayout(cardLayout);
-        LevelChoosing levelChoosing = new LevelChoosing(this);
-        Board board = new Board(6); // Create an instance of the Board class
+        levelChoosing = new LevelChoosing(this);
+        Board board = new Board(6, "easy"); // Create an instance of the Board class
         // Populate the board and retrieve the nurikabeBoardPanel list
-        GamePanel gamePanel = new GamePanel(this, board);
-
+        startGame(board);
+        GamePanel gamePanel = new GamePanel(this, board.nurikabeBoardPanel);
         cardPanel.add(menuPanel, "menu");
         cardPanel.add(levelChoosing, "levelChoosing");
         cardPanel.add(gamePanel, "gamePanel");
         add(cardPanel);
         board.print();
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            Main app = new Main();
+            app.setVisible(true);
+        });
     }
 
     public void showGamePanel() {
@@ -46,10 +54,10 @@ public class Main extends JFrame {
         cardLayout.show(cardPanel, "levelChoosing");
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            Main app = new Main();
-            app.setVisible(true);
-        });
+    public void startGame(Board board ) {
+//        levelChoosing.getLevel()
+//        String level = levelChoosing.getLevel();
+        board.createBoard();
+
     }
 }
