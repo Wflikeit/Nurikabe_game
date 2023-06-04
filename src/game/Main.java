@@ -30,8 +30,6 @@ public class Main extends JFrame {
         // Populate the board and retrieve the nurikabeBoardPanel list
         board.createBoard();
         gamePanel = new GamePanel(this, board.nurikabeBoardPanel);
-        Timer timer =new Timer(1, gamePanel.new TimerListener());
-        startGame(gamePanel);
         cardPanel.add(menuPanel, "menu");
         cardPanel.add(levelChoosing, "levelChoosing");
         cardPanel.add(gamePanel, "gamePanel");
@@ -61,10 +59,5 @@ public class Main extends JFrame {
         cardLayout.show(cardPanel, "levelChoosing");
     }
 
-    public void startGame(GamePanel gamePanel) {
-//        levelChoosing.getLevel()
-//        String level = levelChoosing.getLevel();
-        gamePanel.timerListener.startTimer();
-
-    }
+    public void startGame(GamePanel gamePanel) {gamePanel.timerListener.startTimer();}
 }

@@ -18,7 +18,6 @@ public class GamePanel extends JPanel {
     public TimerListener timerListener;
 
 
-    private long startTime;
 
 
     public GamePanel(Main mainInstance, java.util.List<Cell> nurikabeBoardPanel) {
@@ -39,7 +38,6 @@ public class GamePanel extends JPanel {
         buttons_panel.setBackground(Color.BLACK);
         timerLabel = new JLabel("00:00:00:00"); // Assign to the class-level field
         timerLabel.setFont(new Font("Nunito", Font.PLAIN, 88));
-        startTime = System.currentTimeMillis();
         ImageIcon stepBackIconOriginal = new ImageIcon("src/gameResources/left-arrow.png");
         Image stepBackIconImage = stepBackIconOriginal.getImage().getScaledInstance(75, 75,
                 Image.SCALE_SMOOTH); // Specify the desired width and height
@@ -61,6 +59,7 @@ public class GamePanel extends JPanel {
         saveGameButton.setBackground(Color.BLACK);
 
 
+
         buttons_panel.add(timerLabel);
         buttons_panel.add(stepBackButton);
         buttons_panel.add(saveGameButton);
@@ -69,12 +68,7 @@ public class GamePanel extends JPanel {
         add(board_panel, BorderLayout.CENTER);
         add(buttons_panel, BorderLayout.NORTH);
 
-        stepBackButton.addActionListener(e -> {
-            timerFlag = false;
-            System.out.println(timerFlag);
-            timerListener.stopTimer();
-            mainInstance.showMenuPanel();
-        });
+        stepBackButton.addActionListener(e -> mainInstance.showMenuPanel());
         saveGameButton.addActionListener(e -> System.out.println("Saving the game to the file!"));
     }
 
@@ -175,9 +169,7 @@ public class GamePanel extends JPanel {
             timer.start();
         }
 
-        public void stopTimer() {
-            timer.stop();
-        }
+
     }
 
 }

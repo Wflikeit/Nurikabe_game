@@ -32,14 +32,22 @@ public class Board {
 //        setLevel(level);
     }
 
+    /**
+     *
+     * @param args not used
+     */
     public static void main(String[] args) {
         Board board = new Board(15, "easy");
         board.setLevel("easy");
         board.createBoard();
     }
 
+    /**
+     *
+     */
     public void createBoard() {
         int index = ThreadLocalRandom.current().nextInt(0, size * size);
+//        first we fill the whole board with black cells
         nurikabeBoardPanel.get(index).setState(1);
         Queue<Integer> q = new LinkedList<>();
         q.offer(index);
@@ -54,8 +62,8 @@ public class Board {
         }
         while (maxSize() > size || maxSize() > 13) {
             fixBigWhiteArea();
-            if (findExpandable() >= 0) {
-                index = findExpandable();
+            index = findExpandable();
+            if (index >= 0) {
                 q.offer(index);
             }
             while (findExpandable() >= 0) {
@@ -67,13 +75,12 @@ public class Board {
                         q.offer(index);
                     }
                 }
-            }
-            for (int i = 0; i < size * size; i++) {
-                if (nurikabeBoardPanel.get(i).isBlank()) {
-                    nurikabeBoardPanel.get(i).setState(2);
+            }for (Cell cell : nurikabeBoardPanel) {
+                if (cell.isBlank()) {
+                    cell.setState(2);
                 }
             }
-            mergeSigleToOne();
+            mergeSingleToOne();
         }
         assignNumbers();
 
@@ -81,31 +88,22 @@ public class Board {
 
     public void setLevel(String level) {
         switch (level) {
-            case "easy": {
-                oneLimit = 0;
-                break;
-            }
-            case "medium": {
-                oneLimit = size;
-                break;
-            }
-            case "hard": {
-                oneLimit = size * size;
-                break;
-            }
+            case "easy" -> oneLimit = 0;
+            case "medium" -> oneLimit = size;
+            case "hard" -> oneLimit = size * size;
         }
     }
 
     private List<Character> availableDir(int index) {
         List<Character> direction = new ArrayList<>();
 
-        if (index % size - 1 >= 0 && nurikabeBoardPanel.get(index - 1).isBlank()) {
+        if ((index % size) - 1 >= 0 && nurikabeBoardPanel.get(index - 1).isBlank()) {
             direction.add('l');
         }
         if (index - size >= 0 && nurikabeBoardPanel.get(index - size).isBlank()) {
             direction.add('u');
         }
-        if (index % size + 1 <= size - 1 && nurikabeBoardPanel.get(index + 1).isBlank()) {
+        if ((index % size) + 1 <= size - 1 && nurikabeBoardPanel.get(index + 1).isBlank()) {
             direction.add('r');
         }
         if (index + size <= size * size - 1 && nurikabeBoardPanel.get(index + size).isBlank()) {
@@ -149,27 +147,12 @@ public class Board {
         for (Character character : direction) {
             int local_index = holder;
             switch (character) {
-                case 'u': {
-                    local_index = local_index - size;
-                    break;
-                }
-                case 'l': {
-                    local_index = local_index - 1;
-                    break;
-                }
-                case 'd': {
-                    local_index = local_index + size;
-                    break;
-                }
-                case 'r': {
-                    local_index = local_index + 1;
-                    break;
-                }
-                default:
-                    break;
+                case 'u' -> local_index = local_index - size;
+                case 'l' -> local_index = local_index - 1;
+                case 'd' -> local_index = local_index + size;
+                case 'r' -> local_index = local_index + 1;
             }
-            if (willBeBlackSquare(local_index)) {
-                nurikabeBoardPanel.get(local_index).setState(2);
+            if (willBeBlackSquare(local_index)) {nurikabeBoardPanel.get(local_index).setState(2);
             } else if (ThreadLocalRandom.current().nextInt(100) >= 75) {
                 if (isExpandable(q) && !willBeWhiteSquare(local_index)) {
                     nurikabeBoardPanel.get(local_index).setState(2);
@@ -329,7 +312,7 @@ public class Board {
                 nurikabeBoardPanel.get(i).setState(1);
             }
         }
-        return black.size() == 1;
+        return black.size() != 1;
     }
 
     private void getBlackNeigh(Integer index, List<Cell> arr, Set<Integer> neigh) {
@@ -347,7 +330,7 @@ public class Board {
         }
     }
 
-    private void mergeSigleToOne() {
+    private void mergeSingleToOne() {
         List<AbstractMap.SimpleEntry<Integer, List<Integer>>> areas = countWhiteAreaSizes();
         int counter = 0;
         for (int i = 0; i < areas.size(); i++) {
@@ -363,14 +346,14 @@ public class Board {
                         if (areas.get(i).getValue().get(0) > areas.get(j).getValue().get(0)) {
                             nurikabeBoardPanel.get(areas.get(i).getValue().get(0) - 1).setState(2);
                             counter++;
-                            if (!checkCohesion()) {
+                            if (checkCohesion()) {
                                 nurikabeBoardPanel.get(areas.get(i).getValue().get(0) - 1).setState(1);
                                 counter--;
                             }
                         } else {
                             nurikabeBoardPanel.get(areas.get(i).getValue().get(0) + 1).setState(2);
                             counter++;
-                            if (!checkCohesion()) {
+                            if (checkCohesion()) {
                                 nurikabeBoardPanel.get(areas.get(i).getValue().get(0) + 1).setState(1);
                                 counter--;
                             }
@@ -380,14 +363,14 @@ public class Board {
                         if (areas.get(i).getValue().get(0) > areas.get(j).getValue().get(0)) {
                             nurikabeBoardPanel.get(areas.get(i).getValue().get(0) - size).setState(2);
                             counter++;
-                            if (!checkCohesion()) {
+                            if (checkCohesion()) {
                                 nurikabeBoardPanel.get(areas.get(i).getValue().get(0) - size).setState(1);
                                 counter--;
                             }
                         } else {
                             nurikabeBoardPanel.get(areas.get(i).getValue().get(0) + size).setState(2);
                             counter++;
-                            if (!checkCohesion()) {
+                            if (checkCohesion()) {
                                 nurikabeBoardPanel.get(areas.get(i).getValue().get(0) + size).setState(1);
                                 counter--;
                             }
@@ -398,12 +381,9 @@ public class Board {
         }
     }
 
-    public void loadBoard() {
+    public void loadBoard() {}
 
-    }
-
-    public void saveBoard() {
-    }
+    public void saveBoard() {}
 
     public void print() {
         for (int i = 0; i < this.size; i++) {
@@ -413,9 +393,5 @@ public class Board {
             }
             System.out.print("\n");
         }
-    }
-
-    public int getOneLimit() {
-        return oneLimit;
     }
 }
