@@ -1,8 +1,8 @@
 package game;
 
 import game.GUI.GamePanel.GamePanel;
-import game.GUI.LevelChoosing;
-import game.GUI.Menu;
+import game.GUI.DecisionPanels.LevelChoosing;
+import game.GUI.DecisionPanels.Menu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +26,7 @@ public class Main extends JFrame {
         this.setBackground(Color.BLACK);
 
         setLocationRelativeTo(null);
-        game.GUI.Menu menuPanel = new Menu(this);
+        Menu menuPanel = new Menu(this);
 
         menuPanel.setLayout(cardLayout);
         levelChoosing = new LevelChoosing(this);

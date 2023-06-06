@@ -9,14 +9,10 @@ public enum ColorsEnum {
     COLOR_4(0xFFF7EF),
     COLOR_5(0x8E8AB3);
 
-    private int rgb;
+    private final int rgb;
 
     ColorsEnum(int rgb) {
         this.rgb = rgb;
-    }
-
-    public int getRGB() {
-        return rgb;
     }
 
     public Color getColor() {

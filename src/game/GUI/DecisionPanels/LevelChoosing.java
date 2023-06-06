@@ -1,5 +1,7 @@
-package game.GUI;
+package game.GUI.DecisionPanels;
 
+import game.GUI.ButtonUtils;
+import game.GUI.ColorsEnum;
 import game.Main;
 
 import javax.swing.*;
