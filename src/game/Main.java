@@ -57,11 +57,16 @@ public class Main extends JFrame {
 
     public void showMenuPanel() {
         cardLayout.show(cardPanel, "menu");
+        pack();
     }
 
     public void showLevelChoosing() {
         cardLayout.show(cardPanel, "levelChoosing");
+        pack();
+
     }
 
-    public void startGame(GamePanel gamePanel) {gamePanel.timerListener.startTimer();}
+    public void startGame(GamePanel gamePanel) {gamePanel.timerListener.startTimer();
+        pack();
+    }
 }
