@@ -1,9 +1,9 @@
-package game;
+package game.GUI;
+
+import game.Main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LevelChoosing extends JPanel {
     private String level = null;

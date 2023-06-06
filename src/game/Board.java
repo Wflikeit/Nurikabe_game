@@ -13,7 +13,7 @@ public class Board {
     /**
      * limit of one sized "islands" - it is indicator of difficulty level
      */
-    private int oneLimit;
+    private double oneLimit;
 
     /**
      * 0 - means that a cell is blank
@@ -33,7 +33,6 @@ public class Board {
     }
 
     /**
-     *
      * @param args not used
      */
     public static void main(String[] args) {
@@ -42,9 +41,6 @@ public class Board {
         board.createBoard();
     }
 
-    /**
-     *
-     */
     public void createBoard() {
         int index = ThreadLocalRandom.current().nextInt(0, size * size);
 //        first we fill the whole board with black cells
@@ -75,7 +71,8 @@ public class Board {
                         q.offer(index);
                     }
                 }
-            }for (Cell cell : nurikabeBoardPanel) {
+            }
+            for (Cell cell : nurikabeBoardPanel) {
                 if (cell.isBlank()) {
                     cell.setState(2);
                 }
@@ -86,6 +83,9 @@ public class Board {
 
     }
 
+    /**
+     * @param level a String object representing a level of difficulty of board
+     */
     public void setLevel(String level) {
         switch (level) {
             case "easy" -> oneLimit = 0;
@@ -94,6 +94,10 @@ public class Board {
         }
     }
 
+    /**
+     * @param index int that represents an index
+     * @return an arrayList that contains characters representing possible directions
+     */
     private List<Character> availableDir(int index) {
         List<Character> direction = new ArrayList<>();
 
@@ -152,7 +156,8 @@ public class Board {
                 case 'd' -> local_index = local_index + size;
                 case 'r' -> local_index = local_index + 1;
             }
-            if (willBeBlackSquare(local_index)) {nurikabeBoardPanel.get(local_index).setState(2);
+            if (willBeBlackSquare(local_index)) {
+                nurikabeBoardPanel.get(local_index).setState(2);
             } else if (ThreadLocalRandom.current().nextInt(100) >= 75) {
                 if (isExpandable(q) && !willBeWhiteSquare(local_index)) {
                     nurikabeBoardPanel.get(local_index).setState(2);
@@ -277,7 +282,7 @@ public class Board {
     }
 
     private void assignNumbers() {
-    List<AbstractMap.SimpleEntry<Integer, List<Integer>>> areas = countWhiteAreaSizes();
+        List<AbstractMap.SimpleEntry<Integer, List<Integer>>> areas = countWhiteAreaSizes();
         for (AbstractMap.SimpleEntry<Integer, List<Integer>> area : areas) {
             int index = area.getValue().get(ThreadLocalRandom.current().nextInt(area.getValue().size()));
             int value = area.getKey();
@@ -295,14 +300,14 @@ public class Board {
             if (copy.get(i).isBlack()) {
                 counter = 1;
                 Set<Integer> neigh = new TreeSet<>();
-                getBlackNeigh(i, copy, neigh);
+                getBlackNeighbour(i, copy, neigh);
                 copy.get(i).setState(0);
                 while (!neigh.isEmpty()) {
                     counter++;
                     int index = neigh.stream().toList().get(0);
                     copy.get(index).setState(0);
                     neigh.remove(index);
-                    getBlackNeigh(index, copy, neigh);
+                    getBlackNeighbour(index, copy, neigh);
                 }
                 black.add(counter);
             }
@@ -315,18 +320,18 @@ public class Board {
         return black.size() != 1;
     }
 
-    private void getBlackNeigh(Integer index, List<Cell> arr, Set<Integer> neigh) {
+    private void getBlackNeighbour(Integer index, List<Cell> arr, Set<Integer> neighbours) {
         if (index % size - 1 >= 0 && arr.get(index - 1).isBlack()) {
-            neigh.add(index - 1);
+            neighbours.add(index - 1);
         }
         if (index - size >= 0 && arr.get(index - size).isBlack()) {
-            neigh.add(index - size);
+            neighbours.add(index - size);
         }
         if (index % size + 1 <= size - 1 && arr.get(index + 1).isBlack()) {
-            neigh.add(index + 1);
+            neighbours.add(index + 1);
         }
         if (index + size <= size * size - 1 && arr.get(index + size).isBlack()) {
-            neigh.add(index + size);
+            neighbours.add(index + size);
         }
     }
 
@@ -381,9 +386,11 @@ public class Board {
         }
     }
 
-    public void loadBoard() {}
+    public void loadBoard() {
+    }
 
-    public void saveBoard() {}
+    public void saveBoard() {
+    }
 
     public void print() {
         for (int i = 0; i < this.size; i++) {

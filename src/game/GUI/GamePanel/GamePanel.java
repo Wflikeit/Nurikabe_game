@@ -1,12 +1,12 @@
-package game;
+package game.GUI.GamePanel;
+
+import game.Cell;
+import game.Main;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Objects;
 
 public class GamePanel extends JPanel {
     private final Main mainInstance;
@@ -74,70 +74,30 @@ public class GamePanel extends JPanel {
 
     public static void main(String[] args) {
     }
-
-    private void createSquares(JPanel board_panel) {
+    private void createSquares(JPanel boardPanel) {
         int gridSize = 6;
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
-                Square square = new Square();
-
-                switch (nurikabeBoardPanel.get(i * gridSize + j).getState()) {
-                    case 1 -> {
-                        square.setColor(Color.WHITE);
-                        square.addMouseListener(new SquareClickListener(square));
-                        board_panel.add(square);
-                    }
-                    case 2 -> {
-                        if (nurikabeBoardPanel.get(i * gridSize + j).getValue() != null) {
-                            JButton button1 = new JButton(nurikabeBoardPanel.get(i * gridSize + j).getValue());
-
-                            button1.setBackground(ColorsEnum.BUTTON_COLOR_2.getColor());
-                            button1.setForeground(Color.WHITE);
-                            button1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-                            board_panel.add(button1);
-                        } else {
-
-                            square.setColor(Color.WHITE);
-                            square.addMouseListener(new SquareClickListener(square));
-                            board_panel.add(square);
-                        }
-                    }
+                Cell cell = nurikabeBoardPanel.get(i * gridSize + j);
+                GameBoardCell gameBoardCell = createGameBoardCell(cell);
+                boardPanel.add(gameBoardCell.getComponent());
+            }
+        }
+    }
+    private GameBoardCell createGameBoardCell(Cell cell) {
+        GameBoardCell gameBoardCell;
+        switch (cell.getState()) {
+            case 1 -> gameBoardCell = new SquareCell();
+            case 2 -> {
+                if (cell.getValue() != null) {
+                    gameBoardCell = new ButtonCell(cell.getValue());
+                } else {
+                    gameBoardCell = new SquareCell();
                 }
             }
+            default -> throw new IllegalArgumentException("Invalid cell state: " + cell.getState());
         }
-    }
-
-    private static class Square extends JPanel {
-        private Color color;
-
-        public Square() {
-            color = Color.WHITE;
-            setBackground(color);
-            setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        }
-
-        public void setColor(Color color) {
-            this.color = color;
-            setBackground(color);
-        }
-    }
-
-    private static class SquareClickListener extends MouseAdapter {
-        private final Square square;
-
-        public SquareClickListener(Square square) {
-            this.square = square;
-        }
-        @Override
-        public void mousePressed(MouseEvent e) {
-            if (square.color == Color.WHITE) {
-                square.setColor(Color.BLACK);
-            } else if (Objects.equals(square.color, ColorsEnum.BUTTON_COLOR_2.getColor())) {
-                square.setColor(Color.WHITE);
-            } else if (square.color == Color.BLACK) {
-                square.setColor(ColorsEnum.BUTTON_COLOR_2.getColor());
-            }
-        }
+        return gameBoardCell;
     }
 
     public class TimerListener implements ActionListener {
