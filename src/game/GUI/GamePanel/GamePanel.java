@@ -3,6 +3,8 @@ package game.GUI.GamePanel;
 import game.Cell;
 import game.GUI.Visuals.IconsGamePanel;
 import game.GameManager;
+import game.GamePanelManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,25 +18,28 @@ public class GamePanel extends JPanel {
     private final JButton stepBackButton;
     private final JButton checkGameButton;
     public TimerListener timerListener;
+    public GamePanelManager gamePanelManager;
+    public GameManager gameManager;
 
-//    public JButton getPauseGameButton() {
-//        return pauseGameButton;
-//    }
-//
-//    public JButton getSaveGameButton() {
-//        return saveGameButton;
-//    }
-//
-//    public JButton getStepBackButton() {
-//        return stepBackButton;
-//    }
-//
-//    public JButton getCheckGameButton() {
-//        return checkGameButton;
-//    }
+    public JButton getPauseGameButton() {
+        return pauseGameButton;
+    }
+
+    public JButton getSaveGameButton() {
+        return saveGameButton;
+    }
+
+    public JButton getStepBackButton() {
+        return stepBackButton;
+    }
+
+    public JButton getCheckGameButton() {
+        return checkGameButton;
+    }
 
     public GamePanel(GameManager mainInstance, java.util.List<Cell> nurikabeBoardPanel, int size) {
         setLayout(new BorderLayout());
+        this.gameManager = mainInstance;
 
         JPanel boardPanel = new JPanel();
         BoardGenerator boardGenerator = new BoardGenerator(boardPanel, nurikabeBoardPanel);
@@ -73,11 +78,12 @@ public class GamePanel extends JPanel {
         add(boardPanel, BorderLayout.CENTER);
         add(buttonsPanel, BorderLayout.NORTH);
 
-//        GamePanelManager gamePanelManager = new GamePanelManager(this);
-
-        stepBackButton.addActionListener(e -> mainInstance.showMenuPanel());
-        saveGameButton.addActionListener(e -> System.out.println("Saving the game to the file!"));
-
+        gamePanelManager = new GamePanelManager(this);
+        gamePanelManager.setupButtonListeners();
+//
+//        stepBackButton.addActionListener(e -> mainInstance.showMenuPanel());
+//        saveGameButton.addActionListener(e -> System.out.println("Saving the game to the file!"));
+//
         timerListener = new TimerListener();
         timer = new Timer(1, timerListener);
         timerListener.startTimer();
