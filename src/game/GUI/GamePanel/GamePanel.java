@@ -1,7 +1,8 @@
 package game.GUI.GamePanel;
 
 import game.Cell;
-import game.GUI.IconsGamePanel;
+import game.GUI.Visuals.IconsGamePanel;
+import game.GamePanelManager;
 import game.Main;
 
 import javax.swing.*;
@@ -10,80 +11,83 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GamePanel extends JPanel {
-    public final JLabel timerLabel;
-    private final Main mainInstance;
-    private final java.util.List<Cell> nurikabeBoardPanel;
-    public Timer timer;
+    private final JLabel timerLabel;
+    private final Timer timer;
+    private final JButton pauseGameButton;
+    private final JButton saveGameButton;
+    private final JButton stepBackButton;
+    private final JButton checkGameButton;
     public TimerListener timerListener;
-    int gridSize = 6;
 
+    public JButton getPauseGameButton() {
+        return pauseGameButton;
+    }
+
+    public JButton getSaveGameButton() {
+        return saveGameButton;
+    }
+
+    public JButton getStepBackButton() {
+        return stepBackButton;
+    }
+
+    public JButton getCheckGameButton() {
+        return checkGameButton;
+    }
 
     public GamePanel(Main mainInstance, java.util.List<Cell> nurikabeBoardPanel) {
-        this.nurikabeBoardPanel = nurikabeBoardPanel;
-        JPanel board_panel = new JPanel();
-        JPanel buttons_panel = new JPanel();
         setLayout(new BorderLayout());
 
-
-        BoardGenerator boardGenerator = new BoardGenerator(board_panel, nurikabeBoardPanel);
+        JPanel boardPanel = new JPanel();
+        BoardGenerator boardGenerator = new BoardGenerator(boardPanel, nurikabeBoardPanel);
         boardGenerator.generateVisualBoard();
 
-
-        timerListener = new TimerListener(); // Initialize the timerListener field
-        this.mainInstance = mainInstance;
-
-        timer = new Timer(1, timerListener);
-        buttons_panel.setLayout(new FlowLayout());
-        buttons_panel.setBackground(Color.BLACK);
-        timerLabel = new JLabel("00:00:00:00"); // Assign to the class-level field
+        timerLabel = new JLabel("00:00:00:00");
         timerLabel.setFont(new Font("Nunito", Font.PLAIN, 88));
-        ImageIcon stepBackButtonImageIconOriginal = new ImageIcon("src/gameResources/stepBackButton.png");
-        Image stepBackButtonImage = stepBackButtonImageIconOriginal.getImage().getScaledInstance(75, 75,
-                Image.SCALE_SMOOTH); // Specify the desired width and height
-        ImageIcon stepBackButtonImageIcon = new ImageIcon(stepBackButtonImage);
-        JButton stepBackButton = new JButton(stepBackButtonImageIcon);
 
+        String stepBackButtonPath = "src/gameResources/stepBackButton.png";
+        String saveGameButtonPath = "src/gameResources/saveGameButton.png";
+        String checkGameButtonPath = "src/gameResources/checkButton.png";
+        String pauseGameButtonPath = "src/gameResources/pauseGameButton.png";
 
-        String saveGameButtonImagePath = "src/gameResources/saveGameButton.png";
-        ImageIcon saveGameButtonImageIcon = new ImageIcon(new ImageIcon(saveGameButtonImagePath).getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
-        JButton saveGameButton = new JButton(saveGameButtonImageIcon);
+        stepBackButton = new JButton(IconsGamePanel.prepareGameIcon(stepBackButtonPath));
+        saveGameButton = new JButton(IconsGamePanel.prepareGameIcon(saveGameButtonPath));
+        checkGameButton = new JButton(IconsGamePanel.prepareGameIcon(checkGameButtonPath));
+        pauseGameButton = new JButton(IconsGamePanel.prepareGameIcon(pauseGameButtonPath));
 
-        String checkButtonImagePath = "src/gameResources/checkButton.png";
-        ImageIcon checkButtonButtonImageIcon = new ImageIcon(new ImageIcon(checkButtonImagePath).getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
-        JButton checkGameButton = new JButton(checkButtonButtonImageIcon);
+        IconsGamePanel.prepareGamePanelButtonVisuals(stepBackButton);
+        IconsGamePanel.prepareGamePanelButtonVisuals(saveGameButton);
+        IconsGamePanel.prepareGamePanelButtonVisuals(checkGameButton);
+        IconsGamePanel.prepareGamePanelButtonVisuals(pauseGameButton);
 
-        String pauseGameButtonImagePath = "src/gameResources/pauseGameButtonImage.png";
-        ImageIcon pauseGameButtonImageIcon = new ImageIcon(new ImageIcon(pauseGameButtonImagePath).getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
-        JButton pauseGameButton = new JButton(pauseGameButtonImageIcon);
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new FlowLayout());
+        buttonsPanel.setBackground(Color.BLACK);
 
+        buttonsPanel.add(timerLabel);
+        buttonsPanel.add(stepBackButton);
+        buttonsPanel.add(checkGameButton);
+        buttonsPanel.add(saveGameButton);
+        buttonsPanel.add(pauseGameButton);
 
-        IconsGamePanel.prepareGameIcon(stepBackButton);
-        IconsGamePanel.prepareGameIcon(saveGameButton);
-        IconsGamePanel.prepareGameIcon(checkGameButton);
-        IconsGamePanel.prepareGameIcon(pauseGameButton);
+        int gridSize = 6;
+        boardPanel.setLayout(new GridLayout(gridSize, gridSize));
+        add(boardPanel, BorderLayout.CENTER);
+        add(buttonsPanel, BorderLayout.NORTH);
 
-
-        buttons_panel.add(timerLabel);
-        buttons_panel.add(stepBackButton);
-        buttons_panel.add(checkGameButton);
-        buttons_panel.add(saveGameButton);
-        buttons_panel.add(pauseGameButton);
-
-        board_panel.setLayout(new GridLayout(gridSize, gridSize));
-        add(board_panel, BorderLayout.CENTER);
-        add(buttons_panel, BorderLayout.NORTH);
+        GamePanelManager gamePanelManager = new GamePanelManager(this);
+        gamePanelManager.setupButtonListeners();
 
         stepBackButton.addActionListener(e -> mainInstance.showMenuPanel());
         saveGameButton.addActionListener(e -> System.out.println("Saving the game to the file!"));
+
+        timerListener = new TimerListener();
+        timer = new Timer(1, timerListener);
+        timerListener.startTimer();
     }
-
-    public static void main(String[] args) {
-    }
-
-
 
     public class TimerListener implements ActionListener {
-        private long startTime;
+        private final long startTime;
 
         public TimerListener() {
             startTime = System.currentTimeMillis();
@@ -91,25 +95,20 @@ public class GamePanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Calculate the elapsed time
             long currentTime = System.currentTimeMillis();
             long elapsedTime = currentTime - startTime;
 
-            // Format the elapsed time as HH:mm:ss
             long hours = elapsedTime / (1000 * 60 * 60);
             long minutes = (elapsedTime / (1000 * 60)) % 60;
             long seconds = (elapsedTime / 1000) % 60;
             long milliseconds = elapsedTime % 1000;
             String formattedTime = String.format("%02d:%02d:%02d:%03d", hours, minutes, seconds, milliseconds);
 
-            // Update the timer label
             timerLabel.setText(formattedTime);
         }
 
         public void startTimer() {
-            startTime = System.currentTimeMillis();
             timer.start();
         }
     }
 }
-

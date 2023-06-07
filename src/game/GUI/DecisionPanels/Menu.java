@@ -1,7 +1,7 @@
 package game.GUI.DecisionPanels;
 
-import game.GUI.ButtonUtils;
-import game.GUI.ColorsEnum;
+import game.GUI.Visuals.ButtonUtils;
+import game.GUI.Visuals.ColorsEnum;
 import game.Main;
 
 import javax.swing.*;
@@ -10,6 +10,7 @@ import java.awt.*;
 
 public class Menu extends JPanel{
     private Main mainInstance;
+    public JButton newGameButton;
 
     private void start(){
 
