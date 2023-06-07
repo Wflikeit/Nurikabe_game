@@ -13,7 +13,6 @@ public class GamePanel extends JPanel {
     public final JLabel timerLabel;
     private final Main mainInstance;
     private final java.util.List<Cell> nurikabeBoardPanel;
-    public Boolean timerFlag;
     public Timer timer;
     public TimerListener timerListener;
     int gridSize = 6;
@@ -25,9 +24,9 @@ public class GamePanel extends JPanel {
         JPanel buttons_panel = new JPanel();
         setLayout(new BorderLayout());
 
-        createSquares(board_panel);
 
-//        BoardGenerator boardGenerator = new BoardGenerator();
+        BoardGenerator boardGenerator = new BoardGenerator(board_panel, nurikabeBoardPanel);
+        boardGenerator.generateVisualBoard();
 
 
         timerListener = new TimerListener(); // Initialize the timerListener field
@@ -81,32 +80,7 @@ public class GamePanel extends JPanel {
     public static void main(String[] args) {
     }
 
-    private void createSquares(JPanel boardPanel) {
-        int gridSize = 6;
-        for (int i = 0; i < gridSize; i++) {
-            for (int j = 0; j < gridSize; j++) {
-                Cell cell = nurikabeBoardPanel.get(i * gridSize + j);
-                GameBoardCell gameBoardCell = createGameBoardCell(cell);
-                boardPanel.add(gameBoardCell.getComponent());
-            }
-        }
-    }
 
-    private GameBoardCell createGameBoardCell(Cell cell) {
-        GameBoardCell gameBoardCell;
-        switch (cell.getState()) {
-            case 1 -> gameBoardCell = new SquareCell();
-            case 2 -> {
-                if (cell.getValue() != null) {
-                    gameBoardCell = new ButtonCell(cell.getValue());
-                } else {
-                    gameBoardCell = new SquareCell();
-                }
-            }
-            default -> throw new IllegalArgumentException("Invalid cell state: " + cell.getState());
-        }
-        return gameBoardCell;
-    }
 
     public class TimerListener implements ActionListener {
         private long startTime;

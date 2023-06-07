@@ -27,8 +27,6 @@ public class SquareClickListener extends MouseAdapter {
         Color color;
 
         public Square() {
-            color = Color.WHITE;
-            setBackground(color);
             setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         }
 
