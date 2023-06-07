@@ -1,7 +1,6 @@
 package game.GUI.GamePanel;
 
-import java.awt.Color;
-import java.awt.Component;
+import java.awt.*;
 
 public class SquareCell implements GameBoardCell {
     private final SquareClickListener.Square square;

@@ -2,6 +2,7 @@ package game.GUI.Visuals;
 
 import javax.swing.*;
 import java.awt.*;
+
 public class ButtonUtils {
     static Dimension buttonSize = new Dimension(500, 100);
     static Font Font1 = new Font("Font1", Font.BOLD, 28);

@@ -7,12 +7,14 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
+
 public class SquareClickListener extends MouseAdapter {
     private final Square square;
 
     public SquareClickListener(game.GUI.GamePanel.SquareClickListener.Square square) {
         this.square = square;
     }
+
     @Override
     public void mousePressed(MouseEvent e) {
         if (square.color == Color.WHITE) {
@@ -23,6 +25,7 @@ public class SquareClickListener extends MouseAdapter {
             square.setColor(ColorsEnum.BUTTON_COLOR_2.getColor());
         }
     }
+
     static class Square extends JPanel {
         Color color;
 

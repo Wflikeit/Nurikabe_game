@@ -5,16 +5,17 @@ import game.Cell;
 import javax.swing.*;
 import java.awt.*;
 
-public class BoardGenerator implements GameBoardCell{
+public class BoardGenerator implements GameBoardCell {
     private final JPanel game_board;
     private final java.util.List<Cell> nurikabeBoardPanel;
 
-    public BoardGenerator(JPanel game_board, java.util.List<Cell> nurikabeBoardPanel){
-        this.game_board =  game_board;
-        this.nurikabeBoardPanel = nurikabeBoardPanel ;
+    public BoardGenerator(JPanel game_board, java.util.List<Cell> nurikabeBoardPanel) {
+        this.game_board = game_board;
+        this.nurikabeBoardPanel = nurikabeBoardPanel;
 
     }
-    public void generateVisualBoard(int gridSize){
+
+    public void generateVisualBoard(int gridSize) {
         createSquares(game_board, gridSize);
     }
 
@@ -27,6 +28,7 @@ public class BoardGenerator implements GameBoardCell{
             }
         }
     }
+
     private GameBoardCell createGameBoardCell(Cell cell) {
         GameBoardCell gameBoardCell;
         switch (cell.getState()) {
@@ -42,6 +44,7 @@ public class BoardGenerator implements GameBoardCell{
         }
         return gameBoardCell;
     }
+
     @Override
     public Component getComponent() {
         return game_board;

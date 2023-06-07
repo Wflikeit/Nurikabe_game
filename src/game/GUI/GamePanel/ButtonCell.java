@@ -2,11 +2,8 @@ package game.GUI.GamePanel;
 
 import game.GUI.Visuals.ColorsEnum;
 
-import java.awt.Color;
-import java.awt.Component;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
+import javax.swing.*;
+import java.awt.*;
 
 public class ButtonCell implements GameBoardCell {
     private final JButton button;

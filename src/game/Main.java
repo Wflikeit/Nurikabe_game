@@ -15,13 +15,12 @@ public class Main extends JFrame {
         setIconImage(appLogo.getImage());
         setLocationRelativeTo(null);
 
-
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             Main app = new Main();
-            GameManager gameManager= new GameManager(app);
+            GameManager gameManager = new GameManager(app);
             app.setVisible(true);
         });
     }

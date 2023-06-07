@@ -1,6 +1,6 @@
 package game.GUI.GamePanel;
 
-import java.awt.Component;
+import java.awt.*;
 
 public interface GameBoardCell {
     Component getComponent();

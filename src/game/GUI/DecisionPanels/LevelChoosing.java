@@ -3,6 +3,7 @@ package game.GUI.DecisionPanels;
 import game.GUI.Visuals.ButtonUtils;
 import game.GUI.Visuals.ColorsEnum;
 import game.GameManager;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -68,8 +69,7 @@ public class LevelChoosing extends JPanel {
 
 
         add(panel1, BorderLayout.CENTER);
-        button4.addActionListener(e ->
-                gameManager.showMenuPanel()
+        button4.addActionListener(e -> gameManager.showMenuPanel()
 
         );
         button1.addActionListener(e -> {

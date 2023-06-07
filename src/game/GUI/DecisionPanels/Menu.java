@@ -3,19 +3,12 @@ package game.GUI.DecisionPanels;
 import game.GUI.Visuals.ButtonUtils;
 import game.GUI.Visuals.ColorsEnum;
 import game.GameManager;
+
 import javax.swing.*;
 import java.awt.*;
 
 
-public class Menu extends JPanel{
-
-    private void start(){
-
-    }
-    private void chooseSettings(){}
-    private void chooseFile(){}
-
-
+public class Menu extends JPanel {
 
     public Menu(GameManager gameManager) {
         setLayout(new BorderLayout());
@@ -51,8 +44,6 @@ public class Menu extends JPanel{
         exitButton.addActionListener(e -> System.exit(0));
 
 
-
-
         container.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -83,8 +74,19 @@ public class Menu extends JPanel{
 
         add(container, BorderLayout.CENTER);
     }
+
     public static void main(String[] args) {
 
+    }
+
+    private void start() {
+
+    }
+
+    private void chooseSettings() {
+    }
+
+    private void chooseFile() {
     }
 
 }

@@ -7,10 +7,6 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Board {
-    public int getSize() {
-        return size;
-    }
-
     private final int size;
     List<Cell> nurikabeBoardPanel = new ArrayList<>();
     /**
@@ -41,6 +37,10 @@ public class Board {
         Board board = new Board(15, "easy");
         board.setLevel("easy");
         board.createBoard();
+    }
+
+    public int getSize() {
+        return size;
     }
 
     public void createBoard() {
