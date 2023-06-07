@@ -14,12 +14,11 @@ public class BoardGenerator implements GameBoardCell{
         this.nurikabeBoardPanel = nurikabeBoardPanel ;
 
     }
-    public void generateVisualBoard(){
-        createSquares(game_board);
+    public void generateVisualBoard(int gridSize){
+        createSquares(game_board, gridSize);
     }
 
-    private void createSquares(JPanel boardPanel) {
-        int gridSize = 6;
+    private void createSquares(JPanel boardPanel, int gridSize) {
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
                 Cell cell = nurikabeBoardPanel.get(i * gridSize + j);

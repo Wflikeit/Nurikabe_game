@@ -2,15 +2,14 @@ package game.GUI.DecisionPanels;
 
 import game.GUI.Visuals.ButtonUtils;
 import game.GUI.Visuals.ColorsEnum;
-import game.Main;
-
+import game.GameManager;
 import javax.swing.*;
 import java.awt.*;
 
 public class LevelChoosing extends JPanel {
     private String level = null;
 
-    public LevelChoosing(Main mainInstance) {
+    public LevelChoosing(GameManager gameManager) {
         JLabel welcomingText = new JLabel("Choose Level");
         ImageIcon imageIcon = new ImageIcon("src/gameResources/nurikabe.png");
 
@@ -70,12 +69,12 @@ public class LevelChoosing extends JPanel {
 
         add(panel1, BorderLayout.CENTER);
         button4.addActionListener(e ->
-                mainInstance.showMenuPanel()
+                gameManager.showMenuPanel()
 
         );
         button1.addActionListener(e -> {
             level = "easy";
-            mainInstance.showGamePanel();
+            gameManager.showGamePanel();
 //            timer.start()
         });
 

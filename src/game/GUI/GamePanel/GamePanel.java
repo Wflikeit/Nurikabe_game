@@ -2,9 +2,7 @@ package game.GUI.GamePanel;
 
 import game.Cell;
 import game.GUI.Visuals.IconsGamePanel;
-import game.GamePanelManager;
-import game.Main;
-
+import game.GameManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,28 +17,28 @@ public class GamePanel extends JPanel {
     private final JButton checkGameButton;
     public TimerListener timerListener;
 
-    public JButton getPauseGameButton() {
-        return pauseGameButton;
-    }
+//    public JButton getPauseGameButton() {
+//        return pauseGameButton;
+//    }
+//
+//    public JButton getSaveGameButton() {
+//        return saveGameButton;
+//    }
+//
+//    public JButton getStepBackButton() {
+//        return stepBackButton;
+//    }
+//
+//    public JButton getCheckGameButton() {
+//        return checkGameButton;
+//    }
 
-    public JButton getSaveGameButton() {
-        return saveGameButton;
-    }
-
-    public JButton getStepBackButton() {
-        return stepBackButton;
-    }
-
-    public JButton getCheckGameButton() {
-        return checkGameButton;
-    }
-
-    public GamePanel(Main mainInstance, java.util.List<Cell> nurikabeBoardPanel) {
+    public GamePanel(GameManager mainInstance, java.util.List<Cell> nurikabeBoardPanel, int size) {
         setLayout(new BorderLayout());
 
         JPanel boardPanel = new JPanel();
         BoardGenerator boardGenerator = new BoardGenerator(boardPanel, nurikabeBoardPanel);
-        boardGenerator.generateVisualBoard();
+        boardGenerator.generateVisualBoard(size);
 
         timerLabel = new JLabel("00:00:00:00");
         timerLabel.setFont(new Font("Nunito", Font.PLAIN, 88));
@@ -70,13 +68,12 @@ public class GamePanel extends JPanel {
         buttonsPanel.add(saveGameButton);
         buttonsPanel.add(pauseGameButton);
 
-        int gridSize = 6;
-        boardPanel.setLayout(new GridLayout(gridSize, gridSize));
+//        System.out.println(nurikabeBoardPanel.);
+        boardPanel.setLayout(new GridLayout(size, size));
         add(boardPanel, BorderLayout.CENTER);
         add(buttonsPanel, BorderLayout.NORTH);
 
-        GamePanelManager gamePanelManager = new GamePanelManager(this);
-        gamePanelManager.setupButtonListeners();
+//        GamePanelManager gamePanelManager = new GamePanelManager(this);
 
         stepBackButton.addActionListener(e -> mainInstance.showMenuPanel());
         saveGameButton.addActionListener(e -> System.out.println("Saving the game to the file!"));

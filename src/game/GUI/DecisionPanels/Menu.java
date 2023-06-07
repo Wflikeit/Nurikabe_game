@@ -2,15 +2,12 @@ package game.GUI.DecisionPanels;
 
 import game.GUI.Visuals.ButtonUtils;
 import game.GUI.Visuals.ColorsEnum;
-import game.Main;
-
+import game.GameManager;
 import javax.swing.*;
 import java.awt.*;
 
 
 public class Menu extends JPanel{
-    private Main mainInstance;
-    public JButton newGameButton;
 
     private void start(){
 
@@ -20,10 +17,8 @@ public class Menu extends JPanel{
 
 
 
-    public Menu(Main mainInstance) {
+    public Menu(GameManager gameManager) {
         setLayout(new BorderLayout());
-
-        this.mainInstance = mainInstance;
 
 
         Container container = new Container();
@@ -48,7 +43,7 @@ public class Menu extends JPanel{
 
         newGameButton.addActionListener(e -> {
             System.out.println("Rozpoczęcie nowej gry...");
-            mainInstance.showLevelChoosing(); // Wywołanie metody showLevelChoosing() na obiekcie Main
+            gameManager.showLevelChoosing(); // Wywołanie metody showLevelChoosing() na obiekcie Main
         });
 
         loadGameButton.addActionListener(e -> System.out.println("Wczytywanie gry..."));
@@ -88,10 +83,6 @@ public class Menu extends JPanel{
 
         add(container, BorderLayout.CENTER);
     }
-    public void setMainInstance(Main mainInstance) {
-        this.mainInstance = mainInstance;
-    }
-
     public static void main(String[] args) {
 
     }
