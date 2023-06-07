@@ -81,7 +81,7 @@ public class LevelChoosing extends JPanel {
 
     }
 
-    public String getLevel(){
+    public String getLevel() {
         return level;
 
     }

@@ -1,8 +1,8 @@
 package game;
 
-import game.GUI.GamePanel.GamePanel;
 import game.GUI.DecisionPanels.LevelChoosing;
 import game.GUI.DecisionPanels.Menu;
+import game.GUI.GamePanel.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -66,7 +66,8 @@ public class Main extends JFrame {
 
     }
 
-    public void startGame(GamePanel gamePanel) {gamePanel.timerListener.startTimer();
+    public void startGame(GamePanel gamePanel) {
+        gamePanel.timerListener.startTimer();
         pack();
     }
 }

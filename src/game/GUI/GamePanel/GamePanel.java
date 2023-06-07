@@ -1,6 +1,7 @@
 package game.GUI.GamePanel;
 
 import game.Cell;
+import game.GUI.IconsGamePanel;
 import game.Main;
 
 import javax.swing.*;
@@ -9,15 +10,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GamePanel extends JPanel {
+    public final JLabel timerLabel;
     private final Main mainInstance;
     private final java.util.List<Cell> nurikabeBoardPanel;
-    int gridSize = 6;
-    public final JLabel timerLabel;
     public Boolean timerFlag;
     public Timer timer;
     public TimerListener timerListener;
-
-
+    int gridSize = 6;
 
 
     public GamePanel(Main mainInstance, java.util.List<Cell> nurikabeBoardPanel) {
@@ -28,6 +27,9 @@ public class GamePanel extends JPanel {
 
         createSquares(board_panel);
 
+//        BoardGenerator boardGenerator = new BoardGenerator();
+
+
         timerListener = new TimerListener(); // Initialize the timerListener field
         this.mainInstance = mainInstance;
 
@@ -36,46 +38,30 @@ public class GamePanel extends JPanel {
         buttons_panel.setBackground(Color.BLACK);
         timerLabel = new JLabel("00:00:00:00"); // Assign to the class-level field
         timerLabel.setFont(new Font("Nunito", Font.PLAIN, 88));
-        ImageIcon stepBackButtonImageIconOriginal = new ImageIcon("src/gameResources/left-arrow.png");
+        ImageIcon stepBackButtonImageIconOriginal = new ImageIcon("src/gameResources/stepBackButton.png");
         Image stepBackButtonImage = stepBackButtonImageIconOriginal.getImage().getScaledInstance(75, 75,
                 Image.SCALE_SMOOTH); // Specify the desired width and height
         ImageIcon stepBackButtonImageIcon = new ImageIcon(stepBackButtonImage);
         JButton stepBackButton = new JButton(stepBackButtonImageIcon);
-        stepBackButton.setBorderPainted(false); // Remove border painting
-        stepBackButton.setContentAreaFilled(false); // Remove default content area fill
-        stepBackButton.setFocusPainted(false); // Remove focus painting
-        stepBackButton.setBackground(Color.BLACK);
 
-        ImageIcon saveGameButtonImageIconOriginal = new ImageIcon("src/gameResources/diskette.png"); // Replace with the path to your image
-        Image saveGameButtonImage = saveGameButtonImageIconOriginal.getImage().getScaledInstance(75, 75,
-                Image.SCALE_SMOOTH); // Specify the desired width and height
-        ImageIcon saveGameButtonImageIcon = new ImageIcon(saveGameButtonImage);
+
+        String saveGameButtonImagePath = "src/gameResources/saveGameButton.png";
+        ImageIcon saveGameButtonImageIcon = new ImageIcon(new ImageIcon(saveGameButtonImagePath).getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
         JButton saveGameButton = new JButton(saveGameButtonImageIcon);
-        saveGameButton.setBorderPainted(false); // Remove border painting
-        saveGameButton.setContentAreaFilled(false); // Remove default content area fill
-        saveGameButton.setFocusPainted(false); // Remove focus painting
-        saveGameButton.setBackground(Color.BLACK);
 
-        ImageIcon pauseGameButtonImageIconOriginal = new ImageIcon("src/gameResources/pauseGameButtonImage.png"); // Replace with the path to your image
-        Image pauseGameButtonImage = pauseGameButtonImageIconOriginal.getImage().getScaledInstance(75, 75,
-                Image.SCALE_SMOOTH); // Specify the desired width and height
-        ImageIcon pauseGameButtonImageIcon = new ImageIcon(pauseGameButtonImage);
+        String checkButtonImagePath = "src/gameResources/checkButton.png";
+        ImageIcon checkButtonButtonImageIcon = new ImageIcon(new ImageIcon(checkButtonImagePath).getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+        JButton checkGameButton = new JButton(checkButtonButtonImageIcon);
+
+        String pauseGameButtonImagePath = "src/gameResources/pauseGameButtonImage.png";
+        ImageIcon pauseGameButtonImageIcon = new ImageIcon(new ImageIcon(pauseGameButtonImagePath).getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
         JButton pauseGameButton = new JButton(pauseGameButtonImageIcon);
-        pauseGameButton.setBorderPainted(false); // Remove border painting
-        pauseGameButton.setContentAreaFilled(false); // Remove default content area fill
-        pauseGameButton.setFocusPainted(false); // Remove focus painting
-        pauseGameButton.setBackground(Color.BLACK);
 
-        ImageIcon checkButtonImageIconOriginal = new ImageIcon("src/gameResources/checkButton.png"); // Replace with the path to your image
-        Image checkButtonImage = checkButtonImageIconOriginal.getImage().getScaledInstance(75, 75,
-                Image.SCALE_SMOOTH); // Specify the desired width and height
-        ImageIcon checkButtonImageIcon = new ImageIcon(checkButtonImage);
-        JButton checkGameButton = new JButton(checkButtonImageIcon);
-        checkGameButton.setBorderPainted(false); // Remove border painting
-        checkGameButton.setContentAreaFilled(false); // Remove default content area fill
-        checkGameButton.setFocusPainted(false); // Remove focus painting
-        checkGameButton.setBackground(Color.BLACK);
 
+        IconsGamePanel.prepareGameIcon(stepBackButton);
+        IconsGamePanel.prepareGameIcon(saveGameButton);
+        IconsGamePanel.prepareGameIcon(checkGameButton);
+        IconsGamePanel.prepareGameIcon(pauseGameButton);
 
 
         buttons_panel.add(timerLabel);
@@ -94,6 +80,7 @@ public class GamePanel extends JPanel {
 
     public static void main(String[] args) {
     }
+
     private void createSquares(JPanel boardPanel) {
         int gridSize = 6;
         for (int i = 0; i < gridSize; i++) {
@@ -104,6 +91,7 @@ public class GamePanel extends JPanel {
             }
         }
     }
+
     private GameBoardCell createGameBoardCell(Cell cell) {
         GameBoardCell gameBoardCell;
         switch (cell.getState()) {
@@ -148,9 +136,6 @@ public class GamePanel extends JPanel {
             startTime = System.currentTimeMillis();
             timer.start();
         }
-
-
     }
-
 }
 
