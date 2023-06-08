@@ -73,9 +73,17 @@ public class LevelChoosing extends JPanel {
 
         );
         button1.addActionListener(e -> {
-            level = "easy";
+            level = "Easy";
             gameManager.showGamePanel();
-//            timer.start()
+
+        });
+        button2.addActionListener(e -> {
+            level = "Hard";
+            gameManager.showGamePanel();
+        });
+        button3.addActionListener(e -> {
+            level = "Hell";
+            gameManager.showGamePanel();
         });
 
     }

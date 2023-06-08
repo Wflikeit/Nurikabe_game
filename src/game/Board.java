@@ -8,6 +8,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Board {
     private final int size;
+    private String level;
+
+    public String getLevel() {
+        return level;
+    }
+
     List<Cell> nurikabeBoardPanel = new ArrayList<>();
     /**
      * limit of one sized "islands" - it is indicator of difficulty level
@@ -27,15 +33,16 @@ public class Board {
                 nurikabeBoardPanel.add(new Cell(new Point(i, j), 0));
             }
         }
-//        setLevel(level);
+        this.level = level;
+        setLevel(level);
     }
 
     /**
      * @param args not used
      */
     public static void main(String[] args) {
-        Board board = new Board(15, "easy");
-        board.setLevel("easy");
+        Board board = new Board(15, "Easy");
+        board.setLevel("Easy");
         board.createBoard();
     }
 
@@ -90,9 +97,9 @@ public class Board {
      */
     public void setLevel(String level) {
         switch (level) {
-            case "easy" -> oneLimit = 0;
-            case "medium" -> oneLimit = size;
-            case "hard" -> oneLimit = size * size;
+            case "Easy" -> oneLimit = 0;
+            case "Hard" -> oneLimit = size;
+            case "Hell" -> oneLimit = size * size;
         }
     }
 
