@@ -38,6 +38,12 @@ public class Menu extends JPanel {
             System.out.println("Rozpoczęcie nowej gry...");
             gameManager.showLevelChoosing(); // Wywołanie metody showLevelChoosing() na obiekcie Main
         });
+        loadGameButton.addActionListener(e -> {
+            System.out.println("Wczytywanie...");
+            FileChooser fileChooser = new FileChooser(this);
+            fileChooser.showFileChooser();
+
+        });
 
         loadGameButton.addActionListener(e -> System.out.println("Wczytywanie gry..."));
 
@@ -90,5 +96,7 @@ public class Menu extends JPanel {
     }
 
 }
+
+
 
 
