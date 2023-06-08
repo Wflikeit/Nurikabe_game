@@ -45,8 +45,6 @@ public class Menu extends JPanel {
 
         });
 
-        loadGameButton.addActionListener(e -> System.out.println("Wczytywanie gry..."));
-
         exitButton.addActionListener(e -> System.exit(0));
 
 

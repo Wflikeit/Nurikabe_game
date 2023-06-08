@@ -14,7 +14,7 @@ public class Board {
         return level;
     }
 
-    List<Cell> nurikabeBoardPanel = new ArrayList<>();
+    public List<Cell> nurikabeBoardPanel = new ArrayList<>();
     /**
      * limit of one sized "islands" - it is indicator of difficulty level
      */

@@ -3,7 +3,6 @@ package game;
 import game.GUI.GamePanel.GamePanel;
 
 import javax.swing.*;
-import java.io.File;
 
 public class GamePanelManager {
     private GamePanel gamePanel;

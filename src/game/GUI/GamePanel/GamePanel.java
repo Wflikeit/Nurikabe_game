@@ -81,16 +81,18 @@ public class GamePanel extends JPanel {
     }
 
     public class TimerListener implements ActionListener {
-        private final long startTime;
+        private long startTime;
+        private long elapsedTime;
 
         public TimerListener() {
             startTime = System.currentTimeMillis();
+            elapsedTime = 0;
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
             long currentTime = System.currentTimeMillis();
-            long elapsedTime = currentTime - startTime;
+            elapsedTime = currentTime - startTime;
 
             long hours = elapsedTime / (1000 * 60 * 60);
             long minutes = (elapsedTime / (1000 * 60)) % 60;
@@ -102,7 +104,13 @@ public class GamePanel extends JPanel {
         }
 
         public void startTimer() {
+            startTime = System.currentTimeMillis() - elapsedTime; // Adjust the start time based on the elapsed time
             timer.start();
+        }
+
+        public void resetTimer() {
+            startTime = System.currentTimeMillis(); // Reset the start time to the current time
+            elapsedTime = 0; // Reset the elapsed time
         }
     }
 }
