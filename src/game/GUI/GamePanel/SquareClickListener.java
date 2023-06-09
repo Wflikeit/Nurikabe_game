@@ -1,6 +1,6 @@
 package game.GUI.GamePanel;
 
-import game.GUI.Visuals.ColorsEnum;
+import game.GUI.Tools.ColorsEnum;
 
 import javax.swing.*;
 import java.awt.*;

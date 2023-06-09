@@ -1,10 +1,9 @@
 package game;
 
-import game.Board;
 import game.GUI.DecisionPanels.LevelChoosing;
 import game.GUI.DecisionPanels.Menu;
+import game.GUI.DecisionPanels.PausePanel;
 import game.GUI.GamePanel.GamePanel;
-import game.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,16 +22,19 @@ public class GameManager {
         game.GUI.DecisionPanels.Menu menuPanel = new Menu(this);
         menuPanel.setLayout(cardLayout);
         LevelChoosing levelChoosing = new LevelChoosing(this);
-        Board board = new Board(16, "easy"); // Create an instance of the Board class
+        PausePanel pausePanel = new PausePanel(this);
+        Board board = new Board(12, "easy"); // Create an instance of the Board class
         // Populate the board and retrieve the nurikabeBoardPanel list
         board.createBoard();
         gamePanel = new GamePanel(this, board.nurikabeBoardPanel, board.getSize());
         cardPanel.add(menuPanel, "menu");
         cardPanel.add(levelChoosing, "levelChoosing");
         cardPanel.add(gamePanel, "gamePanel");
+        cardPanel.add(pausePanel, "pausePanel");
         app.add(cardPanel);
         board.print();
         gamePanel.timerListener.startTimer();
+//        JComboBox
     }
 
     public void showGamePanel() {
@@ -49,6 +51,11 @@ public class GameManager {
 
     public void showLevelChoosing() {
         cardLayout.show(cardPanel, "levelChoosing");
+        app.pack();
+    }
+
+    public void showPausePanel() {
+        cardLayout.show(cardPanel, "pausePanel");
         app.pack();
     }
 

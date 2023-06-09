@@ -7,23 +7,19 @@ import game.GameManager;
 import javax.swing.*;
 import java.awt.*;
 
-public class LevelChoosing extends JPanel {
-    private String level;
-    private SizeJComboBox sizeJComboBox;
+public class PausePanel extends JPanel {
+private String level;
 
-    public LevelChoosing(GameManager gameManager) {
-        String[] items = {"5", "6", "7", "8", "9", "10", "11", "12"};
-        SizeJComboBox sizeJComboBox = new SizeJComboBox(items);
-        sizeJComboBox.initialize();
-        JLabel welcomingText = new JLabel("Choose Level");
+    public PausePanel(GameManager gameManager) {
+        JLabel welcomingText = new JLabel("Game Paused");
         ImageIcon imageIcon = new ImageIcon("src/gameResources/nurikabe.png");
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
         JPanel panel1 = new JPanel();
         JLabel picture1 = new JLabel(imageIcon);
-        JButton button1 = new JButton("Easy");
-        JButton button2 = new JButton("Hard");
-        JButton button3 = new JButton("Hell");
+        JButton button1 = new JButton("Continue");
+        JButton button2 = new JButton("SaveGame");
+        JButton button3 = new JButton("Show solution ");
         JButton button4 = new JButton("Menu");
 
 
@@ -76,23 +72,21 @@ public class LevelChoosing extends JPanel {
 
         );
         button1.addActionListener(e -> {
-            level = "Easy";
-            sizeJComboBox.initialize();
-            JOptionPane.showMessageDialog(null, sizeJComboBox, "Select Size", JOptionPane.PLAIN_MESSAGE);
-
             gameManager.showGamePanel();
 
         });
         button2.addActionListener(e -> {
-            level = "Hard";
-            JOptionPane.showMessageDialog(null, sizeJComboBox, "Select Size", JOptionPane.PLAIN_MESSAGE);
             gameManager.showGamePanel();
         });
         button3.addActionListener(e -> {
-            level = "Hell";
-            JOptionPane.showMessageDialog(null, sizeJComboBox, "Select Size", JOptionPane.PLAIN_MESSAGE);
+//            JOptionPane.showMessageDialog(null, sizeJComboBox, "Select Size", JOptionPane.PLAIN_MESSAGE);
 
             gameManager.showGamePanel();
+        });
+        button4.addActionListener(e -> {
+//            JOptionPane.showMessageDialog(null, sizeJComboBox, "Select Size", JOptionPane.PLAIN_MESSAGE);
+
+            gameManager.showMenuPanel();
         });
 
     }

@@ -1,7 +1,7 @@
 package game.GUI.GamePanel;
 
 import game.Cell;
-import game.GUI.Visuals.IconsGamePanel;
+import game.GUI.Tools.IconsGamePanel;
 import game.GameManager;
 import game.GamePanelManager;
 
@@ -91,6 +91,12 @@ public class GamePanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            String formattedTime = getTime();
+
+            timerLabel.setText(formattedTime);
+        }
+
+        private String getTime() {
             long currentTime = System.currentTimeMillis();
             elapsedTime = currentTime - startTime;
 
@@ -98,9 +104,7 @@ public class GamePanel extends JPanel {
             long minutes = (elapsedTime / (1000 * 60)) % 60;
             long seconds = (elapsedTime / 1000) % 60;
             long milliseconds = elapsedTime % 1000;
-            String formattedTime = String.format("%02d:%02d:%02d:%03d", hours, minutes, seconds, milliseconds);
-
-            timerLabel.setText(formattedTime);
+            return String.format("%02d:%02d:%02d:%03d", hours, minutes, seconds, milliseconds);
         }
 
         public void startTimer() {
