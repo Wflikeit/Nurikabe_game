@@ -15,6 +15,8 @@ public class GameManager {
     private int size;
     private String level;
     private final GamePanel gamePanel; // Store a reference to the current GamePanel
+    private final GamePanelManager gamePanelManager; // Store a reference to the current GamePanel
+    private Board board; // Store a reference to the current GamePanel
     private final LevelChoosing levelChoosing;
 
     public GameManager(Main app) {
@@ -26,16 +28,14 @@ public class GameManager {
         menuPanel.setLayout(cardLayout);
         levelChoosing = new LevelChoosing(this);
         PausePanel pausePanel = new PausePanel(this);
-        Board board = new Board(12, "easy"); // Create an instance of the Board class
-        // Populate the board and retrieve the nurikabeBoardPanel list
-        board.fillBoard();
-        gamePanel = new GamePanel(this, board.nurikabeBoardPanel, board.getSize());
+
+        gamePanel = new GamePanel(this);
+        gamePanelManager = new GamePanelManager(gamePanel);
         cardPanel.add(menuPanel, "menu");
         cardPanel.add(levelChoosing, "levelChoosing");
         cardPanel.add(gamePanel, "gamePanel");
         cardPanel.add(pausePanel, "pausePanel");
         app.add(cardPanel);
-        board.print();
         gamePanel.timerListener.startTimer();
 //        JComboBox
     }
@@ -43,8 +43,13 @@ public class GameManager {
     public void showGamePanel() {
         size = levelChoosing.sizeJComboBox.getSizeOfBoard();
         level = levelChoosing.getLevel();
-        System.out.println(size);
-        System.out.println(level);
+        board = new Board(size, level); // Create an instance of the Board class
+        board.fillBoard();
+        gamePanelManager.setUpGameBoard(board.nurikabeBoardPanel, board.size);
+        // Populate the board and retrieve the nurikabeBoardPanel list
+        board.print();
+
+
         gamePanel.timerListener.startTimer(); // Restart the timer
         startGame(); // Access the stored GamePanel instance
         cardLayout.show(cardPanel, "gamePanel");
@@ -55,14 +60,6 @@ public class GameManager {
 
         cardLayout.show(cardPanel, "menu");
         app.pack();
-    }
-
-    public void setSize() {
-        this.size = levelChoosing.sizeJComboBox.getSizeOfBoard();
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
     }
 
     public void showLevelChoosing() {
