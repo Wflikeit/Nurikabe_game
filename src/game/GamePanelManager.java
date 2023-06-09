@@ -40,6 +40,7 @@ public class GamePanelManager {
         // Logic for pausing the game
         gamePanel.gameManager.showPausePanel();
 
+
     }
 
     private void handleSaveGame() {

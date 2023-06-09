@@ -69,7 +69,7 @@ private String level;
 
         );
         button1.addActionListener(e -> {
-            gameManager.showGamePanel();
+            gameManager.backToGame();
 
         });
         button2.addActionListener(e -> {
