@@ -25,7 +25,7 @@ public class GameManager {
         PausePanel pausePanel = new PausePanel(this);
         Board board = new Board(12, "easy"); // Create an instance of the Board class
         // Populate the board and retrieve the nurikabeBoardPanel list
-        board.createBoard();
+        board.fillBoard();
         gamePanel = new GamePanel(this, board.nurikabeBoardPanel, board.getSize());
         cardPanel.add(menuPanel, "menu");
         cardPanel.add(levelChoosing, "levelChoosing");

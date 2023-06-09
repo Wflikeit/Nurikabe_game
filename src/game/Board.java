@@ -7,14 +7,9 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Board {
-    private final int size;
-    private String level;
-
-    public String getLevel() {
-        return level;
-    }
-
-    public List<Cell> nurikabeBoardPanel = new ArrayList<>();
+    public final int size;
+    private final String level;
+    List<Cell> nurikabeBoardPanel = new ArrayList<>();
     /**
      * limit of one sized "islands" - it is indicator of difficulty level
      */
@@ -27,32 +22,17 @@ public class Board {
      */
     public Board(int size, String level) {
         this.size = size;
+        this.level = level;
 
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
                 nurikabeBoardPanel.add(new Cell(new Point(i, j), 0));
             }
         }
-        this.level = level;
         setLevel(level);
     }
-
-    /**
-     * @param args not used
-     */
-    public static void main(String[] args) {
-        Board board = new Board(15, "Easy");
-        board.setLevel("Easy");
-        board.createBoard();
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void createBoard() {
+    public void fillBoard() {
         int index = ThreadLocalRandom.current().nextInt(0, size * size);
-//        first we fill the whole board with black cells
         nurikabeBoardPanel.get(index).setState(1);
         Queue<Integer> q = new LinkedList<>();
         q.offer(index);
@@ -61,9 +41,7 @@ public class Board {
             expandToSides(index, q);
         }
         for (int i = 0; i < size * size; i++) {
-            if (nurikabeBoardPanel.get(i).isBlank()) {
-                nurikabeBoardPanel.get(i).setState(2);
-            }
+            if (nurikabeBoardPanel.get(i).isBlank()){nurikabeBoardPanel.get(i).setState(2);}
         }
         while (maxSize() > size || maxSize() > 13) {
             fixBigWhiteArea();
@@ -87,9 +65,11 @@ public class Board {
                 }
             }
             mergeSingleToOne();
+            fixWhiteSquares();
         }
+        mergeSingleToOne();
+        fixWhiteSquares();
         assignNumbers();
-
     }
 
     /**
@@ -97,12 +77,11 @@ public class Board {
      */
     public void setLevel(String level) {
         switch (level) {
-            case "Easy" -> oneLimit = 0;
-            case "Hard" -> oneLimit = size;
-            case "Hell" -> oneLimit = size * size;
+            case "easy" -> oneLimit = 0;
+            case "medium" -> oneLimit = size;
+            case "hard" -> oneLimit = size * size;
         }
     }
-
     /**
      * @param index int that represents an index
      * @return an arrayList that contains characters representing possible directions
@@ -122,37 +101,36 @@ public class Board {
         if (index + size <= size * size - 1 && nurikabeBoardPanel.get(index + size).isBlank()) {
             direction.add('d');
         }
-
         return direction;
     }
-
-    private boolean willBeBlackSquare(int index) {
-        if (index % size - 1 >= 0 && nurikabeBoardPanel.get(index - 1).isBlack() &&
-                index - size >= 0 && nurikabeBoardPanel.get(index - size).isBlack() && nurikabeBoardPanel.get(index - size - 1).isBlack()) {
+    private boolean willBeSquare(int index, int color) {
+        int row = index / size;
+        int col = index % size;
+        boolean isLeftEdge = col > 0;
+        boolean isRightEdge = col < size - 1;
+        boolean isTopEdge = row > 0;
+        boolean isBottomEdge = row < size - 1;
+        if (isLeftEdge && isTopEdge &&
+                nurikabeBoardPanel.get(index - size - 1).getState() == color &&
+                nurikabeBoardPanel.get(index - size).getState() == color &&
+                nurikabeBoardPanel.get(index - 1).getState() == color) {
             return true;
-        } else if (index - size >= 0 && nurikabeBoardPanel.get(index - size).isBlack() &&
-                index % size + 1 <= size - 1 && nurikabeBoardPanel.get(index + 1).isBlack() && nurikabeBoardPanel.get(index - size + 1).isBlack()) {
+        } else if (isTopEdge && isRightEdge &&
+                nurikabeBoardPanel.get(index - size).getState() == color &&
+                nurikabeBoardPanel.get(index - size + 1).getState() == color &&
+                nurikabeBoardPanel.get(index + 1).getState() == color) {
             return true;
-        } else if (index % size + 1 <= size - 1 && nurikabeBoardPanel.get(index + 1).isBlack() &&
-                index + size <= size * size - 1 && nurikabeBoardPanel.get(index + size).isBlack() && nurikabeBoardPanel.get(index + size + 1).isBlack()) {
+        } else if (isRightEdge && isBottomEdge &&
+                nurikabeBoardPanel.get(index + 1).getState() == color &&
+                nurikabeBoardPanel.get(index + size + 1).getState() == color &&
+                nurikabeBoardPanel.get(index + size).getState() == color) {
             return true;
-        } else return index + size <= size * size - 1 && nurikabeBoardPanel.get(index + size).isBlack() &&
-                index % size - 1 >= 0 && nurikabeBoardPanel.get(index - 1).isBlack() && nurikabeBoardPanel.get(index + size - 1).isBlack();
+        } else return isBottomEdge && isLeftEdge &&
+                nurikabeBoardPanel.get(index + size).getState() == color &&
+                nurikabeBoardPanel.get(index + size - 1).getState() == color &&
+                nurikabeBoardPanel.get(index - 1).getState() == color;
     }
 
-    private boolean willBeWhiteSquare(int index) {
-        if (index % size - 1 >= 0 && nurikabeBoardPanel.get(index - 1).isWhite() &&
-                index - size >= 0 && nurikabeBoardPanel.get(index - size).isWhite() && nurikabeBoardPanel.get(index - size - 1).isWhite()) {
-            return true;
-        } else if (index - size >= 0 && nurikabeBoardPanel.get(index - size).isWhite() &&
-                index % size + 1 <= size - 1 && nurikabeBoardPanel.get(index + 1).isWhite() && nurikabeBoardPanel.get(index - size + 1).isWhite()) {
-            return true;
-        } else if (index % size + 1 <= size - 1 && nurikabeBoardPanel.get(index + 1).isWhite() &&
-                index + size <= size * size - 1 && nurikabeBoardPanel.get(index + size).isWhite() && nurikabeBoardPanel.get(index + size + 1).isWhite()) {
-            return true;
-        } else return index + size <= size * size - 1 && nurikabeBoardPanel.get(index + size).isWhite() &&
-                index % size - 1 >= 0 && nurikabeBoardPanel.get(index - 1).isWhite() && nurikabeBoardPanel.get(index + size - 1).isWhite();
-    }
 
     private void expandToSides(int index, Queue<Integer> q) {
         int holder = index;
@@ -165,10 +143,10 @@ public class Board {
                 case 'd' -> local_index = local_index + size;
                 case 'r' -> local_index = local_index + 1;
             }
-            if (willBeBlackSquare(local_index)) {
+            if (willBeSquare(local_index,1)) {
                 nurikabeBoardPanel.get(local_index).setState(2);
             } else if (ThreadLocalRandom.current().nextInt(100) >= 75) {
-                if (isExpandable(q) && !willBeWhiteSquare(local_index)) {
+                if (isExpandable(q) && !willBeSquare(local_index,2)) {
                     nurikabeBoardPanel.get(local_index).setState(2);
                 } else {
                     nurikabeBoardPanel.get(local_index).setState(1);
@@ -182,7 +160,6 @@ public class Board {
             }
         }
     }
-
     private boolean isConnected(int index) {
         if (index % size - 1 >= 0 && nurikabeBoardPanel.get(index - 1).isBlack()) {
             return true;
@@ -195,7 +172,6 @@ public class Board {
         }
         return index + size <= size * size - 1 && nurikabeBoardPanel.get(index + size).isBlack();
     }
-
     private int findExpandable() {
         for (int i = 0; i < size * size; i++) {
             if (nurikabeBoardPanel.get(i).isBlank()) {
@@ -206,7 +182,6 @@ public class Board {
         }
         return -1;
     }
-
     private List<AbstractMap.SimpleEntry<Integer, List<Integer>>> countWhiteAreaSizes() {
         int counter;
         List<AbstractMap.SimpleEntry<Integer, List<Integer>>> whiteAreas = new ArrayList<>();
@@ -217,7 +192,7 @@ public class Board {
                 counter = 1;
                 Set<Integer> neigh = new TreeSet<>();
                 listOfIndexes.add(i);
-                getWhiteNeigh(i, copy, neigh);
+                getNeighbour(i, copy, neigh,2);
                 copy.get(i).setState(0);
                 while (!neigh.isEmpty()) {
                     counter++;
@@ -225,7 +200,7 @@ public class Board {
                     listOfIndexes.add(index);
                     copy.get(index).setState(0);
                     neigh.remove(index);
-                    getWhiteNeigh(index, copy, neigh);
+                    getNeighbour(index, copy, neigh,2);
                 }
                 AbstractMap.SimpleEntry<Integer, List<Integer>> temp = new AbstractMap.SimpleEntry<>(counter, listOfIndexes);
                 whiteAreas.add(temp);
@@ -238,22 +213,6 @@ public class Board {
         }
         return whiteAreas;
     }
-
-    private void getWhiteNeigh(Integer index, List<Cell> arr, Set<Integer> neigh) {
-        if (index % size - 1 >= 0 && arr.get(index - 1).isWhite()) {
-            neigh.add(index - 1);
-        }
-        if (index - size >= 0 && arr.get(index - size).isWhite()) {
-            neigh.add(index - size);
-        }
-        if (index % size + 1 <= size - 1 && arr.get(index + 1).isWhite()) {
-            neigh.add(index + 1);
-        }
-        if (index + size <= size * size - 1 && arr.get(index + size).isWhite()) {
-            neigh.add(index + size);
-        }
-    }
-
     private void fixBigWhiteArea() {
         List<AbstractMap.SimpleEntry<Integer, List<Integer>>> areas = countWhiteAreaSizes();
         for (AbstractMap.SimpleEntry<Integer, List<Integer>> area : areas) {
@@ -289,18 +248,14 @@ public class Board {
         }
         return false;
     }
-
     private void assignNumbers() {
         List<AbstractMap.SimpleEntry<Integer, List<Integer>>> areas = countWhiteAreaSizes();
         for (AbstractMap.SimpleEntry<Integer, List<Integer>> area : areas) {
             int index = area.getValue().get(ThreadLocalRandom.current().nextInt(area.getValue().size()));
             int value = area.getKey();
             nurikabeBoardPanel.get(index).setValue(Integer.toString(value));
-
-
         }
     }
-
     private boolean checkCohesion() {
         int counter;
         List<Integer> black = new ArrayList<>();
@@ -309,14 +264,14 @@ public class Board {
             if (copy.get(i).isBlack()) {
                 counter = 1;
                 Set<Integer> neigh = new TreeSet<>();
-                getBlackNeighbour(i, copy, neigh);
+                getNeighbour(i, copy, neigh,1);
                 copy.get(i).setState(0);
                 while (!neigh.isEmpty()) {
                     counter++;
                     int index = neigh.stream().toList().get(0);
                     copy.get(index).setState(0);
                     neigh.remove(index);
-                    getBlackNeighbour(index, copy, neigh);
+                    getNeighbour(index, copy, neigh,1);
                 }
                 black.add(counter);
             }
@@ -328,79 +283,60 @@ public class Board {
         }
         return black.size() != 1;
     }
-
-    private void getBlackNeighbour(Integer index, List<Cell> arr, Set<Integer> neighbours) {
-        if (index % size - 1 >= 0 && arr.get(index - 1).isBlack()) {
+    private void getNeighbour(Integer index, List<Cell> arr, Set<Integer> neighbours, int color) {
+        if (index % size - 1 >= 0 && arr.get(index - 1).getState()==color) {
             neighbours.add(index - 1);
         }
-        if (index - size >= 0 && arr.get(index - size).isBlack()) {
+        if (index - size >= 0 && arr.get(index - size).getState()==color) {
             neighbours.add(index - size);
         }
-        if (index % size + 1 <= size - 1 && arr.get(index + 1).isBlack()) {
+        if (index % size + 1 <= size - 1 && arr.get(index + 1).getState()==color) {
             neighbours.add(index + 1);
         }
-        if (index + size <= size * size - 1 && arr.get(index + size).isBlack()) {
+        if (index + size <= size * size - 1 && arr.get(index + size).getState()==color) {
             neighbours.add(index + size);
         }
     }
-
     private void mergeSingleToOne() {
         List<AbstractMap.SimpleEntry<Integer, List<Integer>>> areas = countWhiteAreaSizes();
         int counter = 0;
-        for (int i = 0; i < areas.size(); i++) {
-            if (counter >= oneLimit) {
-                break;
-            }
-            for (int j = 0; j < areas.size(); j++) {
-                if (counter >= oneLimit) {
-                    break;
-                }
+        for (int i = 0; i < areas.size() && counter < oneLimit; i++) {
+            for (int j = 0; j < areas.size() && counter < oneLimit; j++) {
                 if (i != j && areas.get(i).getKey() == 1 && areas.get(j).getKey() == 1) {
-                    if (Math.abs(areas.get(i).getValue().get(0) - areas.get(j).getValue().get(0)) == 2) {
-                        if (areas.get(i).getValue().get(0) > areas.get(j).getValue().get(0)) {
-                            nurikabeBoardPanel.get(areas.get(i).getValue().get(0) - 1).setState(2);
-                            counter++;
-                            if (checkCohesion()) {
-                                nurikabeBoardPanel.get(areas.get(i).getValue().get(0) - 1).setState(1);
-                                counter--;
-                            }
-                        } else {
-                            nurikabeBoardPanel.get(areas.get(i).getValue().get(0) + 1).setState(2);
-                            counter++;
-                            if (checkCohesion()) {
-                                nurikabeBoardPanel.get(areas.get(i).getValue().get(0) + 1).setState(1);
-                                counter--;
-                            }
-                        }
-                    }
-                    if (Math.abs(areas.get(i).getValue().get(0) - areas.get(j).getValue().get(0)) % size == 0) {
-                        if (areas.get(i).getValue().get(0) > areas.get(j).getValue().get(0)) {
-                            nurikabeBoardPanel.get(areas.get(i).getValue().get(0) - size).setState(2);
-                            counter++;
-                            if (checkCohesion()) {
-                                nurikabeBoardPanel.get(areas.get(i).getValue().get(0) - size).setState(1);
-                                counter--;
-                            }
-                        } else {
-                            nurikabeBoardPanel.get(areas.get(i).getValue().get(0) + size).setState(2);
-                            counter++;
-                            if (checkCohesion()) {
-                                nurikabeBoardPanel.get(areas.get(i).getValue().get(0) + size).setState(1);
-                                counter--;
-                            }
-                        }
+                    int diff = Math.abs(areas.get(i).getValue().get(0) - areas.get(j).getValue().get(0));
+                    int index = areas.get(i).getValue().get(0);
+                    if (diff == 2) {
+                        int adjacentIndex = areas.get(i).getValue().get(0) > areas.get(j).getValue().get(0) ? index - 1 : index + 1;
+                        updateStateAndCounter(adjacentIndex, counter);
+                    } else if (diff % size == 0) {
+                        int adjacentIndex = areas.get(i).getValue().get(0) > areas.get(j).getValue().get(0) ? index - size : index + size;
+                        updateStateAndCounter(adjacentIndex, counter);
                     }
                 }
             }
         }
     }
 
+    private void updateStateAndCounter(int index, int counter) {
+        nurikabeBoardPanel.get(index).setState(2);
+        counter++;
+        if (checkCohesion()) {
+            nurikabeBoardPanel.get(index).setState(1);
+            counter--;
+        }
+    }
+    void fixWhiteSquares(){
+        for(int i=0;i<size*size;i++){
+            if(nurikabeBoardPanel.get(i).isWhite()&&willBeSquare(i,2)&&!willBeSquare(i,1)){
+                nurikabeBoardPanel.get(i).setState(1);
+            }
+        }
+    }
     public void loadBoard() {
     }
-
     public void saveBoard() {
-    }
 
+    }
     public void print() {
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
@@ -409,5 +345,8 @@ public class Board {
             }
             System.out.print("\n");
         }
+    }
+    public int getSize(){
+        return this.size;
     }
 }
