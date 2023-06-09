@@ -12,7 +12,10 @@ public class GameManager {
     private final JPanel cardPanel;
     private final CardLayout cardLayout;
     private final Main app;
+    private int size;
+    private String level;
     private final GamePanel gamePanel; // Store a reference to the current GamePanel
+    private final LevelChoosing levelChoosing;
 
     public GameManager(Main app) {
         this.app = app;
@@ -21,7 +24,7 @@ public class GameManager {
 
         game.GUI.DecisionPanels.Menu menuPanel = new Menu(this);
         menuPanel.setLayout(cardLayout);
-        LevelChoosing levelChoosing = new LevelChoosing(this);
+        levelChoosing = new LevelChoosing(this);
         PausePanel pausePanel = new PausePanel(this);
         Board board = new Board(12, "easy"); // Create an instance of the Board class
         // Populate the board and retrieve the nurikabeBoardPanel list
@@ -38,6 +41,10 @@ public class GameManager {
     }
 
     public void showGamePanel() {
+        size = levelChoosing.sizeJComboBox.getSizeOfBoard();
+        level = levelChoosing.getLevel();
+        System.out.println(size);
+        System.out.println(level);
         gamePanel.timerListener.startTimer(); // Restart the timer
         startGame(); // Access the stored GamePanel instance
         cardLayout.show(cardPanel, "gamePanel");
@@ -45,8 +52,17 @@ public class GameManager {
     }
 
     public void showMenuPanel() {
+
         cardLayout.show(cardPanel, "menu");
         app.pack();
+    }
+
+    public void setSize() {
+        this.size = levelChoosing.sizeJComboBox.getSizeOfBoard();
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 
     public void showLevelChoosing() {
@@ -64,4 +80,5 @@ public class GameManager {
         gamePanel.timerListener.startTimer(); // Start the timer from the initial value
         app.pack();
     }
+
 }

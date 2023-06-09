@@ -9,11 +9,11 @@ import java.awt.*;
 
 public class LevelChoosing extends JPanel {
     private String level;
-    private SizeJComboBox sizeJComboBox;
+    public SizeJComboBox sizeJComboBox;
 
     public LevelChoosing(GameManager gameManager) {
         String[] items = {"5", "6", "7", "8", "9", "10", "11", "12"};
-        SizeJComboBox sizeJComboBox = new SizeJComboBox(items);
+        sizeJComboBox = new SizeJComboBox(items);
         sizeJComboBox.initialize();
         JLabel welcomingText = new JLabel("Choose Level");
         ImageIcon imageIcon = new ImageIcon("src/gameResources/nurikabe.png");
