@@ -8,23 +8,17 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PausePanel extends JPanel {
-private String level;
 
     public PausePanel(GameManager gameManager) {
         JLabel welcomingText = new JLabel("Game Paused");
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
         JPanel panel1 = new JPanel();
-        JButton button1 = new JButton("Continue");
-        JButton button2 = new JButton("SaveGame");
-        JButton button3 = new JButton("Show solution ");
-        JButton button4 = new JButton("Menu");
+        JButton button1 = ButtonUtils.prepareButtons(new JButton("Continue"));
+        JButton button2 = ButtonUtils.prepareButtons(new JButton("SaveGame"));
+        JButton button3 = ButtonUtils.prepareButtons(new JButton("Show solution "));
+        JButton button4 = ButtonUtils.prepareButtons(new JButton("Menu"));
 
-
-        ButtonUtils.prepareButtons(button1);
-        ButtonUtils.prepareButtons(button2);
-        ButtonUtils.prepareButtons(button3);
-        ButtonUtils.prepareButtons(button4);
         welcomingText.setFont(new Font("Font1", Font.PLAIN, 56));
         welcomingText.setHorizontalAlignment(SwingConstants.CENTER);
         welcomingText.setForeground(ColorsEnum.BUTTON_COLOR.getColor());
@@ -68,13 +62,8 @@ private String level;
         button4.addActionListener(e -> gameManager.showMenuPanel()
 
         );
-        button1.addActionListener(e -> {
-            gameManager.backToGame();
-
-        });
-        button2.addActionListener(e -> {
-            gameManager.showGamePanel();
-        });
+        button1.addActionListener(e -> gameManager.backToGame());
+        button2.addActionListener(e -> gameManager.showGamePanel());
         button3.addActionListener(e -> {
 //            JOptionPane.showMessageDialog(null, sizeJComboBox, "Select Size", JOptionPane.PLAIN_MESSAGE);
 
@@ -85,11 +74,6 @@ private String level;
 
             gameManager.showMenuPanel();
         });
-
-    }
-
-    public String getLevel() {
-        return level;
 
     }
 

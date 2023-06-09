@@ -31,10 +31,14 @@ public class GamePanel extends JPanel {
         String checkGameButtonPath = "src/gameResources/checkButton.png";
         String pauseGameButtonPath = "src/gameResources/pauseGameButton.png";
 
-        IconsGamePanel.prepareGamePanelButtonVisuals(stepBackButton = new JButton(IconsGamePanel.prepareGameIcon(stepBackButtonPath)));
-        IconsGamePanel.prepareGamePanelButtonVisuals(saveGameButton = new JButton(IconsGamePanel.prepareGameIcon(saveGameButtonPath)));
-        IconsGamePanel.prepareGamePanelButtonVisuals(checkGameButton = new JButton(IconsGamePanel.prepareGameIcon(checkGameButtonPath)));
-        IconsGamePanel.prepareGamePanelButtonVisuals(pauseGameButton = new JButton(IconsGamePanel.prepareGameIcon(pauseGameButtonPath)));
+        IconsGamePanel.prepareGamePanelButtonVisuals(stepBackButton =
+                new JButton(IconsGamePanel.prepareGameIcon(stepBackButtonPath)));
+        IconsGamePanel.prepareGamePanelButtonVisuals(saveGameButton =
+                new JButton(IconsGamePanel.prepareGameIcon(saveGameButtonPath)));
+        IconsGamePanel.prepareGamePanelButtonVisuals(checkGameButton =
+                new JButton(IconsGamePanel.prepareGameIcon(checkGameButtonPath)));
+        IconsGamePanel.prepareGamePanelButtonVisuals(pauseGameButton =
+                new JButton(IconsGamePanel.prepareGameIcon(pauseGameButtonPath)));
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout());
