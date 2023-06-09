@@ -12,7 +12,12 @@ public class GameManager {
     private final JPanel cardPanel;
     private final CardLayout cardLayout;
     private final Main app;
+    private int size;
+    private String level;
     private final GamePanel gamePanel; // Store a reference to the current GamePanel
+    private final GamePanelManager gamePanelManager; // Store a reference to the current GamePanel
+    private Board board; // Store a reference to the current GamePanel
+    private final LevelChoosing levelChoosing;
 
     public GameManager(Main app) {
         this.app = app;
@@ -21,23 +26,30 @@ public class GameManager {
 
         game.GUI.DecisionPanels.Menu menuPanel = new Menu(this);
         menuPanel.setLayout(cardLayout);
-        LevelChoosing levelChoosing = new LevelChoosing(this);
+        levelChoosing = new LevelChoosing(this);
         PausePanel pausePanel = new PausePanel(this);
-        Board board = new Board(12, "easy"); // Create an instance of the Board class
-        // Populate the board and retrieve the nurikabeBoardPanel list
-        board.createBoard();
-        gamePanel = new GamePanel(this, board.nurikabeBoardPanel, board.getSize());
+
+        gamePanel = new GamePanel(this);
+        gamePanelManager = new GamePanelManager(gamePanel);
         cardPanel.add(menuPanel, "menu");
         cardPanel.add(levelChoosing, "levelChoosing");
         cardPanel.add(gamePanel, "gamePanel");
         cardPanel.add(pausePanel, "pausePanel");
         app.add(cardPanel);
-        board.print();
         gamePanel.timerListener.startTimer();
 //        JComboBox
     }
 
     public void showGamePanel() {
+        size = levelChoosing.sizeJComboBox.getSizeOfBoard();
+        level = levelChoosing.getLevel();
+        board = new Board(size, level); // Create an instance of the Board class
+        board.fillBoard();
+        gamePanelManager.setUpGameBoard(board.nurikabeBoardPanel, board.size);
+        // Populate the board and retrieve the nurikabeBoardPanel list
+        board.print();
+
+
         gamePanel.timerListener.startTimer(); // Restart the timer
         startGame(); // Access the stored GamePanel instance
         cardLayout.show(cardPanel, "gamePanel");
@@ -45,6 +57,7 @@ public class GameManager {
     }
 
     public void showMenuPanel() {
+
         cardLayout.show(cardPanel, "menu");
         app.pack();
     }
@@ -64,4 +77,5 @@ public class GameManager {
         gamePanel.timerListener.startTimer(); // Start the timer from the initial value
         app.pack();
     }
+
 }

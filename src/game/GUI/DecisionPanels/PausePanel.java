@@ -12,11 +12,9 @@ private String level;
 
     public PausePanel(GameManager gameManager) {
         JLabel welcomingText = new JLabel("Game Paused");
-        ImageIcon imageIcon = new ImageIcon("src/gameResources/nurikabe.png");
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
         JPanel panel1 = new JPanel();
-        JLabel picture1 = new JLabel(imageIcon);
         JButton button1 = new JButton("Continue");
         JButton button2 = new JButton("SaveGame");
         JButton button3 = new JButton("Show solution ");
@@ -36,7 +34,6 @@ private String level;
         panel1.add(button2);
         panel1.add(button3);
         panel1.add(button4);
-        add(picture1, BorderLayout.EAST);
         panel1.setBackground(Color.BLACK);
         panel1.setLayout(new GridBagLayout());
 

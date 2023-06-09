@@ -14,20 +14,19 @@ public class GamePanel extends JPanel {
     private final JLabel timerLabel;
     private final Timer timer;
     private final JButton pauseGameButton;
+//    udhuvdhid
     private final JButton saveGameButton;
     private final JButton stepBackButton;
     private final JButton checkGameButton;
     public TimerListener timerListener;
+//    dggcohipc
     public GamePanelManager gamePanelManager;
     public GameManager gameManager;
 
-    public GamePanel(GameManager mainInstance, java.util.List<Cell> nurikabeBoardPanel, int size) {
+    public GamePanel(GameManager mainInstance) {
         setLayout(new BorderLayout());
         this.gameManager = mainInstance;
 
-        JPanel boardPanel = new JPanel();
-        BoardGenerator boardGenerator = new BoardGenerator(boardPanel, nurikabeBoardPanel);
-        boardGenerator.generateVisualBoard(size);
 
         timerLabel = new JLabel("00:00:00:00");
         timerLabel.setFont(new Font("Nunito", Font.PLAIN, 88));
@@ -46,6 +45,7 @@ public class GamePanel extends JPanel {
         buttonsPanel.setLayout(new FlowLayout());
         buttonsPanel.setBackground(Color.BLACK);
 
+
         buttonsPanel.add(timerLabel);
         buttonsPanel.add(stepBackButton);
         buttonsPanel.add(checkGameButton);
@@ -53,8 +53,7 @@ public class GamePanel extends JPanel {
         buttonsPanel.add(pauseGameButton);
 
 //        System.out.println(nurikabeBoardPanel.);
-        boardPanel.setLayout(new GridLayout(size, size));
-        add(boardPanel, BorderLayout.CENTER);
+
         add(buttonsPanel, BorderLayout.NORTH);
 
         gamePanelManager = new GamePanelManager(this);

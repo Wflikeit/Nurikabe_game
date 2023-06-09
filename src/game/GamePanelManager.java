@@ -1,16 +1,26 @@
 package game;
 
+import game.GUI.GamePanel.BoardGenerator;
 import game.GUI.GamePanel.GamePanel;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GamePanelManager {
-    private GamePanel gamePanel;
+    private final GamePanel gamePanel;
 
     public GamePanelManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
     }
 
+    public void setUpGameBoard( java.util.List<Cell> nurikabeBoardPanel, int size){
+        JPanel boardPanel = new JPanel();
+        BoardGenerator boardGenerator = new BoardGenerator(boardPanel, nurikabeBoardPanel);
+        boardGenerator.generateVisualBoard(size);
+        boardPanel.setLayout(new GridLayout(size, size));
+        gamePanel.add(boardPanel, BorderLayout.CENTER);
+
+    }
     public void setupButtonListeners() {
         JButton pauseButton = gamePanel.getPauseGameButton();
         JButton saveButton = gamePanel.getSaveGameButton();
