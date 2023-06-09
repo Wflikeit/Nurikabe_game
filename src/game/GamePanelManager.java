@@ -11,12 +11,18 @@ public class GamePanelManager {
 
     public GamePanelManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
+        setupButtonListeners();
     }
 
     public void setUpGameBoard( java.util.List<Cell> nurikabeBoardPanel, int size){
+        if (gamePanel.getComponentCount() == 2){
+            gamePanel.remove(1);
+        }
         JPanel boardPanel = new JPanel();
-        BoardGenerator boardGenerator = new BoardGenerator(boardPanel, nurikabeBoardPanel);
-        boardGenerator.generateVisualBoard(size);
+
+        System.out.println(nurikabeBoardPanel);
+        System.out.println(size);
+        BoardGenerator boardGenerator = new BoardGenerator(boardPanel, nurikabeBoardPanel, size);
         boardPanel.setLayout(new GridLayout(size, size));
         gamePanel.add(boardPanel, BorderLayout.CENTER);
 
@@ -39,6 +45,7 @@ public class GamePanelManager {
     private void handlePauseGame() {
         // Logic for pausing the game
         gamePanel.gameManager.showPausePanel();
+
 
     }
 

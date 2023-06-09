@@ -1,9 +1,7 @@
 package game.GUI.GamePanel;
 
-import game.Cell;
 import game.GUI.Tools.IconsGamePanel;
 import game.GameManager;
-import game.GamePanelManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,13 +12,10 @@ public class GamePanel extends JPanel {
     private final JLabel timerLabel;
     private final Timer timer;
     private final JButton pauseGameButton;
-//    udhuvdhid
     private final JButton saveGameButton;
     private final JButton stepBackButton;
     private final JButton checkGameButton;
     public TimerListener timerListener;
-//    dggcohipc
-    public GamePanelManager gamePanelManager;
     public GameManager gameManager;
 
     public GamePanel(GameManager mainInstance) {
@@ -36,10 +31,14 @@ public class GamePanel extends JPanel {
         String checkGameButtonPath = "src/gameResources/checkButton.png";
         String pauseGameButtonPath = "src/gameResources/pauseGameButton.png";
 
-        IconsGamePanel.prepareGamePanelButtonVisuals(stepBackButton = new JButton(IconsGamePanel.prepareGameIcon(stepBackButtonPath)));
-        IconsGamePanel.prepareGamePanelButtonVisuals(saveGameButton = new JButton(IconsGamePanel.prepareGameIcon(saveGameButtonPath)));
-        IconsGamePanel.prepareGamePanelButtonVisuals(checkGameButton = new JButton(IconsGamePanel.prepareGameIcon(checkGameButtonPath)));
-        IconsGamePanel.prepareGamePanelButtonVisuals(pauseGameButton = new JButton(IconsGamePanel.prepareGameIcon(pauseGameButtonPath)));
+        IconsGamePanel.prepareGamePanelButtonVisuals(stepBackButton =
+                new JButton(IconsGamePanel.prepareGameIcon(stepBackButtonPath)));
+        IconsGamePanel.prepareGamePanelButtonVisuals(saveGameButton =
+                new JButton(IconsGamePanel.prepareGameIcon(saveGameButtonPath)));
+        IconsGamePanel.prepareGamePanelButtonVisuals(checkGameButton =
+                new JButton(IconsGamePanel.prepareGameIcon(checkGameButtonPath)));
+        IconsGamePanel.prepareGamePanelButtonVisuals(pauseGameButton =
+                new JButton(IconsGamePanel.prepareGameIcon(pauseGameButtonPath)));
 
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new FlowLayout());
@@ -52,12 +51,8 @@ public class GamePanel extends JPanel {
         buttonsPanel.add(saveGameButton);
         buttonsPanel.add(pauseGameButton);
 
-//        System.out.println(nurikabeBoardPanel.);
-
         add(buttonsPanel, BorderLayout.NORTH);
 
-        gamePanelManager = new GamePanelManager(this);
-        gamePanelManager.setupButtonListeners();
         timerListener = new TimerListener();
         timer = new Timer(1, timerListener);
         timerListener.startTimer();
@@ -82,10 +77,14 @@ public class GamePanel extends JPanel {
     public class TimerListener implements ActionListener {
         private long startTime;
         private long elapsedTime;
+        private boolean isRunning;
+
 
         public TimerListener() {
             startTime = System.currentTimeMillis();
             elapsedTime = 0;
+            isRunning = false;
+
         }
 
         @Override
@@ -107,8 +106,17 @@ public class GamePanel extends JPanel {
         }
 
         public void startTimer() {
-            startTime = System.currentTimeMillis() - elapsedTime; // Adjust the start time based on the elapsed time
-            timer.start();
+            if (!isRunning) {
+                startTime = System.currentTimeMillis() - elapsedTime; // Adjust the start time based on the elapsed time
+                timer.start();
+                isRunning = true;
+            }
+        }
+        public void stopTimer() {
+            if (isRunning) {
+                timer.stop();
+                isRunning = false;
+            }
         }
 
         public void resetTimer() {

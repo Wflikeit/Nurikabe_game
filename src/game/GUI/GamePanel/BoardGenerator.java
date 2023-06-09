@@ -9,13 +9,14 @@ public class BoardGenerator implements GameBoardCell {
     private final JPanel game_board;
     private final java.util.List<Cell> nurikabeBoardPanel;
 
-    public BoardGenerator(JPanel game_board, java.util.List<Cell> nurikabeBoardPanel) {
+    public BoardGenerator(JPanel game_board, java.util.List<Cell> nurikabeBoardPanel, int gridSize) {
         this.game_board = game_board;
         this.nurikabeBoardPanel = nurikabeBoardPanel;
+        generateVisualBoard(gridSize);
 
     }
 
-    public void generateVisualBoard(int gridSize) {
+    private void generateVisualBoard(int gridSize) {
         createSquares(game_board, gridSize);
     }
 
@@ -27,17 +28,18 @@ public class BoardGenerator implements GameBoardCell {
                 boardPanel.add(gameBoardCell.getComponent());
             }
         }
+        getComponent();
     }
 
     private GameBoardCell createGameBoardCell(Cell cell) {
         GameBoardCell gameBoardCell;
         switch (cell.getState()) {
-            case 1 -> gameBoardCell = new SquareCell();
+            case 1 -> gameBoardCell = new SquareCell(cell.getState());
             case 2 -> {
                 if (cell.getValue() != null) {
                     gameBoardCell = new ButtonCell(cell.getValue());
                 } else {
-                    gameBoardCell = new SquareCell();
+                    gameBoardCell = new SquareCell(cell.getState());
                 }
             }
             default -> throw new IllegalArgumentException("Invalid cell state: " + cell.getState());

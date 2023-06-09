@@ -50,7 +50,6 @@ public class GameManager {
         board.print();
 
 
-        gamePanel.timerListener.startTimer(); // Restart the timer
         startGame(); // Access the stored GamePanel instance
         cardLayout.show(cardPanel, "gamePanel");
         app.pack();
@@ -69,6 +68,7 @@ public class GameManager {
 
     public void showPausePanel() {
         cardLayout.show(cardPanel, "pausePanel");
+        gamePanel.timerListener.stopTimer();
         app.pack();
     }
 
@@ -77,5 +77,11 @@ public class GameManager {
         gamePanel.timerListener.startTimer(); // Start the timer from the initial value
         app.pack();
     }
+    public void backToGame(){
+        board.print();
+        gamePanel.timerListener.startTimer();
+        cardLayout.show(cardPanel, "gamePanel");
 
+
+    }
 }
