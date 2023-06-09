@@ -2,7 +2,6 @@ package game.GUI.GamePanel;
 
 import game.GUI.Tools.IconsGamePanel;
 import game.GameManager;
-import game.GamePanelManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,13 +12,10 @@ public class GamePanel extends JPanel {
     private final JLabel timerLabel;
     private final Timer timer;
     private final JButton pauseGameButton;
-    //    udhuvdhid
     private final JButton saveGameButton;
     private final JButton stepBackButton;
     private final JButton checkGameButton;
     public TimerListener timerListener;
-    //    dggcohipc
-    public GamePanelManager gamePanelManager;
     public GameManager gameManager;
 
     public GamePanel(GameManager mainInstance) {
@@ -51,12 +47,8 @@ public class GamePanel extends JPanel {
         buttonsPanel.add(saveGameButton);
         buttonsPanel.add(pauseGameButton);
 
-//        System.out.println(nurikabeBoardPanel.);
-
         add(buttonsPanel, BorderLayout.NORTH);
 
-        gamePanelManager = new GamePanelManager(this);
-        gamePanelManager.setupButtonListeners();
         timerListener = new TimerListener();
         timer = new Timer(1, timerListener);
         timerListener.startTimer();
@@ -81,8 +73,6 @@ public class GamePanel extends JPanel {
     public class TimerListener implements ActionListener {
         private long startTime;
         private long elapsedTime;
-        private long elapsedPauseTime;
-        private String time;
         private boolean isRunning;
 
 
@@ -108,8 +98,7 @@ public class GamePanel extends JPanel {
             long minutes = (elapsedTime / (1000 * 60)) % 60;
             long seconds = (elapsedTime / 1000) % 60;
             long milliseconds = elapsedTime % 1000;
-            time = String.format("%02d:%02d:%02d:%03d", hours, minutes, seconds, milliseconds);
-            return time;
+            return String.format("%02d:%02d:%02d:%03d", hours, minutes, seconds, milliseconds);
         }
 
         public void startTimer() {
@@ -122,7 +111,6 @@ public class GamePanel extends JPanel {
         public void stopTimer() {
             if (isRunning) {
                 timer.stop();
-                elapsedPauseTime = System.currentTimeMillis() - startTime - elapsedTime;
                 isRunning = false;
             }
         }

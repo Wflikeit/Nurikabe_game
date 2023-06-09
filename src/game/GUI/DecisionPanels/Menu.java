@@ -83,9 +83,6 @@ public class Menu extends JPanel {
 
     }
 
-    private void start() {
-
-    }
 
     private void chooseSettings() {
     }

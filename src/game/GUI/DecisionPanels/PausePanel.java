@@ -93,9 +93,4 @@ private String level;
 
     }
 
-    public void typeInSize() {
-    }
-
-    public void pickDifficulty() {
-    }
 }

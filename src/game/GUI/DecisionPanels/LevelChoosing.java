@@ -102,9 +102,4 @@ public class LevelChoosing extends JPanel {
 
     }
 
-    public void typeInSize() {
-    }
-
-    public void pickDifficulty() {
-    }
 }
