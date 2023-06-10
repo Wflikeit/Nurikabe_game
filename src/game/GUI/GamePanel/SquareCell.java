@@ -55,18 +55,12 @@ public class SquareCell implements GameBoardCell {
         public void mousePressed(MouseEvent e) {
             if (square.color == Color.WHITE) {
                 square.setColor(Color.BLACK);
-//                square.cell.setState(1);
-                System.out.println(square.cell.getState());
 
             } else if (Objects.equals(square.color, ColorsEnum.BUTTON_COLOR_2.getColor())) {
                 square.setColor(Color.WHITE);
-//                square.cell.setState(1);
-                System.out.println(square.cell.getState());
 
             } else if (square.color == Color.BLACK) {
                 square.setColor(ColorsEnum.BUTTON_COLOR_2.getColor());
-//                square.cell.setState(1);
-                System.out.println(square.cell.getState());
             }
             square.cell.updateState();
         }
