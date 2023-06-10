@@ -4,14 +4,16 @@ import game.Cell;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class BoardGenerator implements GameBoardCell {
     private final JPanel game_board;
-    private final java.util.List<Cell> nurikabeBoardPanel;
+    private final java.util.List<Cell> nurikabeBoard;
+    public GameBoardCell gameBoardCell;
 
-    public BoardGenerator(JPanel game_board, java.util.List<Cell> nurikabeBoardPanel, int gridSize) {
+    public BoardGenerator(JPanel game_board, List<Cell> nurikabeBoard, int gridSize) {
         this.game_board = game_board;
-        this.nurikabeBoardPanel = nurikabeBoardPanel;
+        this.nurikabeBoard = nurikabeBoard;
         generateVisualBoard(gridSize);
 
     }
@@ -23,23 +25,27 @@ public class BoardGenerator implements GameBoardCell {
     private void createSquares(JPanel boardPanel, int gridSize) {
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
-                Cell cell = nurikabeBoardPanel.get(i * gridSize + j);
-                GameBoardCell gameBoardCell = createGameBoardCell(cell);
+                gameBoardCell = createGameBoardCell(nurikabeBoard
+                        .get(i * gridSize + j), (i * gridSize + j));
                 boardPanel.add(gameBoardCell.getComponent());
             }
         }
         getComponent();
     }
 
-    private GameBoardCell createGameBoardCell(Cell cell) {
+    private GameBoardCell createGameBoardCell(Cell cell, int index) {
         GameBoardCell gameBoardCell;
         switch (cell.getState()) {
-            case 1 -> gameBoardCell = new SquareCell(cell.getState());
+            case 1 -> {
+                gameBoardCell = new SquareCell(cell.getState(), index, cell);
+                nurikabeBoard.get(index).setState(0);
+            }
             case 2 -> {
                 if (cell.getValue() != null) {
                     gameBoardCell = new ButtonCell(cell.getValue());
                 } else {
-                    gameBoardCell = new SquareCell(cell.getState());
+                    gameBoardCell = new SquareCell(cell.getState(), index, cell);
+                    nurikabeBoard.get(index).setState(0);
                 }
             }
             default -> throw new IllegalArgumentException("Invalid cell state: " + cell.getState());

@@ -35,7 +35,10 @@ public class Cell {
     public void setState(Integer state) {
         this.state = state;
     }
-
+    public void updateState(){
+        if(state+1>2) state = 0;
+        else state++;
+    }
     public String getValue() {
         return this.value;
     }

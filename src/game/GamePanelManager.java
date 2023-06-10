@@ -21,7 +21,7 @@ public class GamePanelManager {
         JPanel boardPanel = new JPanel();
 
         System.out.println(nurikabeBoardPanel);
-        System.out.println(size);
+        System.out.println();
         BoardGenerator boardGenerator = new BoardGenerator(boardPanel, nurikabeBoardPanel, size);
         boardPanel.setLayout(new GridLayout(size, size));
         gamePanel.add(boardPanel, BorderLayout.CENTER);
