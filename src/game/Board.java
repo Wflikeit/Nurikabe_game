@@ -234,7 +234,6 @@ public class Board {
         }
         return max;
     }
-
     private boolean isExpandable(Queue<Integer> q) {
         int counter = 0;
         for (int i = 0; i < q.size(); i++) {
