@@ -14,6 +14,7 @@ public class GamePanel extends JPanel {
     private final JButton pauseGameButton;
     private final JButton saveGameButton;
     private final JButton stepBackButton;
+    private final JButton stepForwardButton;
     private final JButton checkGameButton;
     public TimerListener timerListener;
     public GameManager gameManager;
@@ -27,12 +28,15 @@ public class GamePanel extends JPanel {
         timerLabel.setFont(new Font("Nunito", Font.PLAIN, 88));
 
         String stepBackButtonPath = "src/gameResources/stepBackButton.png";
+        String stepForwardButtonPath = "src/gameResources/stepBackButton.png";
         String saveGameButtonPath = "src/gameResources/saveGameButton.png";
         String checkGameButtonPath = "src/gameResources/checkButton.png";
         String pauseGameButtonPath = "src/gameResources/pauseGameButton.png";
 
         IconsGamePanel.prepareGamePanelButtonVisuals(stepBackButton =
                 new JButton(IconsGamePanel.prepareGameIcon(stepBackButtonPath)));
+        IconsGamePanel.prepareGamePanelButtonVisuals(stepForwardButton =
+                new JButton(IconsGamePanel.prepareGameIcon(stepForwardButtonPath)));
         IconsGamePanel.prepareGamePanelButtonVisuals(saveGameButton =
                 new JButton(IconsGamePanel.prepareGameIcon(saveGameButtonPath)));
         IconsGamePanel.prepareGamePanelButtonVisuals(checkGameButton =
@@ -47,6 +51,7 @@ public class GamePanel extends JPanel {
 
         buttonsPanel.add(timerLabel);
         buttonsPanel.add(stepBackButton);
+        buttonsPanel.add(stepForwardButton);
         buttonsPanel.add(checkGameButton);
         buttonsPanel.add(saveGameButton);
         buttonsPanel.add(pauseGameButton);
@@ -69,6 +74,10 @@ public class GamePanel extends JPanel {
     public JButton getStepBackButton() {
         return stepBackButton;
     }
+    public JButton getStepForwardButton() {
+        return stepForwardButton;
+    }
+
 
     public JButton getCheckGameButton() {
         return checkGameButton;

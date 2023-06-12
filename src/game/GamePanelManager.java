@@ -8,6 +8,7 @@ import java.awt.*;
 
 public class GamePanelManager {
     private final GamePanel gamePanel;
+    private  BoardGenerator boardGenerator;
 
     public GamePanelManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -21,8 +22,8 @@ public class GamePanelManager {
         JPanel boardPanel = new JPanel();
 
         System.out.println(nurikabeBoardPanel);
-        System.out.println();
-        BoardGenerator boardGenerator = new BoardGenerator(boardPanel, nurikabeBoardPanel, size);
+
+        boardGenerator = new BoardGenerator(boardPanel, nurikabeBoardPanel, size);
         boardPanel.setLayout(new GridLayout(size, size));
         gamePanel.add(boardPanel, BorderLayout.CENTER);
 
@@ -31,6 +32,7 @@ public class GamePanelManager {
         JButton pauseButton = gamePanel.getPauseGameButton();
         JButton saveButton = gamePanel.getSaveGameButton();
         JButton stepBackButton = gamePanel.getStepBackButton();
+        JButton stepForwardButton = gamePanel.getStepForwardButton();
         JButton checkButton = gamePanel.getCheckGameButton();
 
         pauseButton.addActionListener(e -> handlePauseGame());
@@ -38,6 +40,9 @@ public class GamePanelManager {
         saveButton.addActionListener(e -> handleSaveGame());
 
         stepBackButton.addActionListener(e -> handleStepBack());
+
+        stepForwardButton.addActionListener(e -> handleStepForward());
+
 
         checkButton.addActionListener(e -> handleCheckGame());
     }
@@ -56,9 +61,13 @@ public class GamePanelManager {
 
     private void handleStepBack() {
         // Logic for stepping back in the game
-        gamePanel.gameManager.showMenuPanel();
+//        gamePanel.gameManager.showMenuPanel();
+        boardGenerator.performCellStepBack();
     }
 
+    private void handleStepForward() {
+        boardGenerator.performCellStepForward();
+    }
     public void handleCheckGame() {
         // Logic for checking the game state
     }

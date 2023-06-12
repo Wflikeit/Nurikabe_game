@@ -7,6 +7,8 @@ public class Cell {
     private Integer state;
     private String value;
 
+    public java.util.List<Integer> times;
+
     public Cell(Point loc, int state) {
         this.loc = loc;
         this.state = state;
@@ -38,6 +40,10 @@ public class Cell {
     public void updateState(){
         if(state+1>2) state = 0;
         else state++;
+    }
+    public void takeBack(){
+        if(state-1<0) state = 2;
+        else state--;
     }
     public String getValue() {
         return this.value;
