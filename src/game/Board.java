@@ -79,9 +79,9 @@ public class Board {
      */
     public void setLevel(String level) {
         switch (level) {
-            case "easy" -> oneLimit = 0;
-            case "medium" -> oneLimit = size;
-            case "hard" -> oneLimit = size * size;
+            case "Easy" -> oneLimit = 0;
+            case "Hard" -> oneLimit = size;
+            case "Hell" -> oneLimit = size * size;
         }
     }
     /**
