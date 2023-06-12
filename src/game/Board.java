@@ -7,9 +7,12 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Board {
+    public List<Cell> getNurikabeBoardPanel() {
+        return nurikabeBoardPanel;
+    }
+
     public final int size;
-    private final String level;
-    List<Cell> nurikabeBoardPanel = new ArrayList<>();
+    private final List<Cell> nurikabeBoardPanel = new ArrayList<>();
     /**
      * limit of one sized "islands" - it is indicator of difficulty level
      */
@@ -22,7 +25,6 @@ public class Board {
      */
     public Board(int size, String level) {
         this.size = size;
-        this.level = level;
 
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
@@ -331,11 +333,6 @@ public class Board {
             }
         }
     }
-    public void loadBoard() {
-    }
-    public void saveBoard() {
-
-    }
     public void print() {
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
@@ -344,8 +341,5 @@ public class Board {
             }
             System.out.print("\n");
         }
-    }
-    public int getSize(){
-        return this.size;
     }
 }

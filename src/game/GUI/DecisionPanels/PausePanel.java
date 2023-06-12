@@ -15,7 +15,7 @@ public class PausePanel extends JPanel {
         setBackground(Color.BLACK);
         JPanel panel1 = new JPanel();
         JButton button1 = ButtonUtils.prepareButtons(new JButton("Continue"));
-        JButton button2 = ButtonUtils.prepareButtons(new JButton("SaveGame"));
+        JButton button2 = ButtonUtils.prepareButtons(new JButton("Save Board"));
         JButton button3 = ButtonUtils.prepareButtons(new JButton("Show solution "));
         JButton button4 = ButtonUtils.prepareButtons(new JButton("Menu"));
 
@@ -63,7 +63,7 @@ public class PausePanel extends JPanel {
 
         );
         button1.addActionListener(e -> gameManager.backToGame());
-        button2.addActionListener(e -> gameManager.showGamePanel());
+        button2.addActionListener(e -> gameManager.saveBoardForHuman());
         button3.addActionListener(e -> {
 //            JOptionPane.showMessageDialog(null, sizeJComboBox, "Select Size", JOptionPane.PLAIN_MESSAGE);
 
