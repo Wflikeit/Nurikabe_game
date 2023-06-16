@@ -27,11 +27,11 @@ public class GamePanel extends JPanel {
         timerLabel = new JLabel("00:00:00:00");
         timerLabel.setFont(new Font("Nunito", Font.PLAIN, 88));
 
-        String stepBackButtonPath = "src/gameResources/stepBackButton.png";
-        String stepForwardButtonPath = "src/gameResources/stepForwardButton.png";
-        String saveGameButtonPath = "src/gameResources/saveGameButton.png";
-        String checkGameButtonPath = "src/gameResources/checkButton.png";
-        String pauseGameButtonPath = "src/gameResources/pauseGameButton.png";
+        String stepBackButtonPath = "img/stepBackButton.png";
+        String stepForwardButtonPath = "img/stepForwardButton.png";
+        String saveGameButtonPath = "img/saveGameButton.png";
+        String checkGameButtonPath = "img/checkButton.png";
+        String pauseGameButtonPath = "img/pauseGameButton.png";
 
         IconsGamePanel.prepareGamePanelButtonVisuals(stepBackButton =
                 new JButton(IconsGamePanel.prepareGameIcon(stepBackButtonPath)));

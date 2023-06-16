@@ -1,8 +1,5 @@
 package game;
 
-import game.Board;
-import game.Cell;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -17,9 +14,11 @@ public class BoardFilePrinterForHuman {
         this.nurikabeBoard = nurikabeBoard;
     }
 
-
     public void saveBoardToFile(String filename) {
-        try (FileWriter writer = new FileWriter(filename)) {
+        String dataFolderPath = "Data/";
+        String filePath = dataFolderPath + filename;
+
+        try (FileWriter writer = new FileWriter(filePath)) {
             int rows = (int) Math.sqrt(nurikabeBoard.size());
             int k = 0;
 
@@ -43,7 +42,7 @@ public class BoardFilePrinterForHuman {
             }
             writer.write("+\n");
 
-            System.out.println("Board saved to " + filename);
+            System.out.println("Board saved to " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -16,7 +16,7 @@ public class BoardGenerator implements GameBoardCell {
     public List<Integer> stepForwardIndexes = new ArrayList<>();
     public int sizeOfPreviousCellsClickedIndexes = 0;
     private final java.util.List<Cell> nurikabeBoard;
-    private java.util.List<SquareCell> squareCells = new ArrayList<>();
+    private final java.util.List<SquareCell> squareCells = new ArrayList<>();
 
     public SquareCell squareCell;
 
@@ -42,7 +42,7 @@ public class BoardGenerator implements GameBoardCell {
         stepForwardIndexes.add(index);
         stepBackIndexes.remove(stepBackIndexes.size() - 1);
         squareCells.get(index).getSquareClickListener().square.changeColorBackwards();
-        squareCells.get(index).getSquareClickListener().square.cell.takeBack();
+        squareCells.get(index).getSquareClickListener().square.cell.stepBack();
         sizeOfPreviousCellsClickedIndexes = cellsClickedIndexes.size();
     }
     public void performCellStepForward(){

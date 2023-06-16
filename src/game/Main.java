@@ -2,7 +2,6 @@ package game;
 
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Main extends JFrame {
 
@@ -10,7 +9,6 @@ public class Main extends JFrame {
         setTitle("Nurikabe Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
-//        setMinimumSize(new Dimension(1000, 600));
         ImageIcon appLogo = new ImageIcon("src/gameResources/nurikabe.png");
         setIconImage(appLogo.getImage());
         setLocationRelativeTo(null);

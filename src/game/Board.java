@@ -319,14 +319,4 @@ public class Board {
             otherBoard.getNurikabeBoardPanel().get(i).setState(nurikabeBoardPanel.get(i).getState());
         }
     }
-    public void print() {
-        for (int i = 0; i < this.size; i++) {
-            for (int j = 0; j < this.size; j++) {
-                System.out.print(nurikabeBoardPanel.get(i * size + j).getState());
-            }
-            System.out.print("\n");
-        }
-        System.out.print("\n");
-    }
-
 }

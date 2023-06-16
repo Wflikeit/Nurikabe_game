@@ -6,11 +6,9 @@ import javax.swing.*;
 import java.io.File;
 
 public class FileChooser {
-    private final Menu menu;
     private File selectedFile;
 
-    public FileChooser(Menu menu) {
-        this.menu = menu;
+    public FileChooser() {
     }
 
     public void showFileChooser() {

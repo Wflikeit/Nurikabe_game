@@ -16,7 +16,7 @@ public class LevelChoosing extends JPanel {
         sizeJComboBox = new SizeJComboBox(items);
         sizeJComboBox.initialize();
         JLabel welcomingText = new JLabel("Choose Level");
-        ImageIcon imageIcon = new ImageIcon("src/gameResources/nurikabe.png");
+        ImageIcon imageIcon = new ImageIcon("img/nurikabe.png");
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
         JPanel panel1 = new JPanel();

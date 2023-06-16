@@ -5,7 +5,6 @@ import game.GUI.DecisionPanels.Menu;
 import game.GUI.DecisionPanels.PausePanel;
 import game.GUI.DecisionPanels.FileChooser;
 import game.GUI.GamePanel.GamePanel;
-import game.Solver;
 import game.GUI.Tools.ColorsEnum;
 
 import javax.swing.*;
@@ -166,6 +165,7 @@ public class GameManager {
         for (int i = 0; i < size * size; i++) {
             solvedBoard.getNurikabeBoardPanel().get(i).setState(Integer.parseInt(saveReader.readLine()));
         }
+        solver = new Solver(board,solvedBoard);
         gamePanel.timerListener.setTimer(time);
         gamePanelManager.setUpGameBoard(board.getNurikabeBoardPanel(), board.size, true);
         gamePanel.timerListener.startTimer();
@@ -184,7 +184,7 @@ public class GameManager {
         app.pack();
     }
     public void loadGameFile() {
-        FileChooser fileChooser = new FileChooser(menuPanel);
+        FileChooser fileChooser = new FileChooser();
         fileChooser.showFileChooser();
         try(FileReader reader = new FileReader(fileChooser.getSelectedFilePath())) {
             this.loadGame(reader);

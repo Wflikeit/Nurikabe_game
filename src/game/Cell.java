@@ -26,9 +26,6 @@ public class Cell {
         return this.state.equals(0);
     }
 
-    public Point getLoc() {
-        return loc;
-    }
 
     public Integer getState() {
         return this.state;

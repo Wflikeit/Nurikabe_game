@@ -73,16 +73,6 @@ public class Menu extends JPanel {
         add(container, BorderLayout.CENTER);
     }
 
-    public static void main(String[] args) {
-
-    }
-
-
-    private void chooseSettings() {
-    }
-
-    private void chooseFile() {
-    }
 
 }
 
