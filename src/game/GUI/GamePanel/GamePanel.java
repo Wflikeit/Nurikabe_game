@@ -28,7 +28,7 @@ public class GamePanel extends JPanel {
         timerLabel.setFont(new Font("Nunito", Font.PLAIN, 88));
 
         String stepBackButtonPath = "src/gameResources/stepBackButton.png";
-        String stepForwardButtonPath = "src/gameResources/stepBackButton.png";
+        String stepForwardButtonPath = "src/gameResources/stepForwardButton.png";
         String saveGameButtonPath = "src/gameResources/saveGameButton.png";
         String checkGameButtonPath = "src/gameResources/checkButton.png";
         String pauseGameButtonPath = "src/gameResources/pauseGameButton.png";

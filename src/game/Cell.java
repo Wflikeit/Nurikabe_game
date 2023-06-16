@@ -41,7 +41,7 @@ public class Cell {
         if(state+1>2) state = 0;
         else state++;
     }
-    public void takeBack(){
+    public void stepBack(){
         if(state-1<0) state = 2;
         else state--;
     }

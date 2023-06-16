@@ -28,7 +28,7 @@ public class Board {
 
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
-                nurikabeBoardPanel.add(new Cell(new Point(i, j), 0));
+                nurikabeBoardPanel.add(new Cell(new Point(j, i), 0));
             }
         }
         setLevel(level);

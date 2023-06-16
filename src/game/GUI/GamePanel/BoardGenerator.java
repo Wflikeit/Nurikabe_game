@@ -1,6 +1,7 @@
 package game.GUI.GamePanel;
 
 import game.Cell;
+import game.Solver;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,23 +12,18 @@ public class BoardGenerator implements GameBoardCell {
     private final JPanel game_board;
 
 //    private MousePressEventLoggingExample mousePressEventLoggingExample;
+
+    public Solver solver;
     public List<Integer> cellsClickedIndexes = new ArrayList<>();
     public List<Integer> stepBackIndexes = new ArrayList<>();
     public List<Integer> stepForwardIndexes = new ArrayList<>();
     public int sizeOfPreviousCellsClickedIndexes = 0;
-    private final java.util.List<Cell> nurikabeBoard;
-    private java.util.List<SquareCell> squareCells = new ArrayList<>();
-
-    public SquareCell squareCell;
-
-    public GameBoardCell gameBoardCell;
-
+    private final List<Cell> nurikabeBoard;
+    private List<SqrOrButtonCell> sqrOrButtonCells = new ArrayList<>();
     public BoardGenerator(JPanel game_board, List<Cell> nurikabeBoard, int gridSize) {
         this.game_board = game_board;
         this.nurikabeBoard = nurikabeBoard;
-//        mousePressEventLoggingExample = new MousePressEventLoggingExample();
         generateVisualBoard(gridSize);
-
     }
 
     private void generateVisualBoard(int gridSize) {
@@ -41,8 +37,8 @@ public class BoardGenerator implements GameBoardCell {
         int index = stepBackIndexes.get(stepBackIndexes.size() - 1);
         stepForwardIndexes.add(index);
         stepBackIndexes.remove(stepBackIndexes.size() - 1);
-        squareCells.get(index).getSquareClickListener().square.changeColorBackwards();
-        squareCells.get(index).getSquareClickListener().square.cell.takeBack();
+        SquareCell squareCell = sqrOrButtonCells.get(index).squareCell;
+        squareCell.getSquareClickListener().square.changeColorBackwards();
         sizeOfPreviousCellsClickedIndexes = cellsClickedIndexes.size();
     }
     public void performCellStepForward(){
@@ -50,17 +46,18 @@ public class BoardGenerator implements GameBoardCell {
         int index = stepForwardIndexes.get(stepForwardIndexes.size() - 1);
         stepBackIndexes.add(index);
         stepForwardIndexes.remove(stepForwardIndexes.size() - 1);
-        squareCells.get(index).getSquareClickListener().square.changeColorForwards();
-        squareCells.get(index).getSquareClickListener().square.cell.updateState();
+        SquareCell squareCell = sqrOrButtonCells.get(index).squareCell;
+        squareCell.getSquareClickListener().square.changeColorForwards();
     }
     private void createSquares(int gridSize) {
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
-                gameBoardCell = createGameBoardCell(nurikabeBoard
+                GameBoardCell gameBoardCell = createGameBoardCell(nurikabeBoard
                         .get(i * gridSize + j), (i * gridSize + j));
                 game_board.add(gameBoardCell.getComponent());
             }
         }
+        solver = new Solver(this.nurikabeBoard, sqrOrButtonCells);
         getComponent();
     }
 
@@ -68,25 +65,26 @@ public class BoardGenerator implements GameBoardCell {
         GameBoardCell gameBoardCell;
         switch (cell.getState()) {
             case 1 -> {
-                squareCell = new SquareCell(cell.getState(), index, cell);
+                SquareCell squareCell = new SquareCell(cell.getState(), index, cell);
                 SquareCell.SquareClickListener.Square square = squareCell.getSquareClickListener().square;
                 square.addMouseListener(new SquareCell.SquareClickListener(square, cellsClickedIndexes));
                 gameBoardCell = squareCell;
                 nurikabeBoard.get(index).setState(0);
-                squareCells.add(squareCell);
+                sqrOrButtonCells.add(new SqrOrButtonCell(squareCell));
             }
             case 2 -> {
                 if (cell.getValue() != null) {
-                    gameBoardCell = new ButtonCell(cell.getValue());
-                    squareCell = new SquareCell(0, 0, new Cell(new Point(-1,-1),0));
-                    squareCells.add(squareCell);
+                    ButtonCell buttonCell = new ButtonCell(cell.getValue(), index, cell.getLoc());
+                    gameBoardCell = buttonCell;
+                    sqrOrButtonCells.add(new SqrOrButtonCell(buttonCell));
+
                 } else {
-                    squareCell = new SquareCell(cell.getState(), index, cell);
+                    SquareCell squareCell = new SquareCell(cell.getState(), index, cell);
                     SquareCell.SquareClickListener.Square square = squareCell.getSquareClickListener().square;
                     square.addMouseListener(new SquareCell.SquareClickListener(square, cellsClickedIndexes));
                     gameBoardCell = squareCell;
                     nurikabeBoard.get(index).setState(0);
-                    squareCells.add(squareCell);
+                    sqrOrButtonCells.add(new SqrOrButtonCell(squareCell));
                 }
             }
             default -> throw new IllegalArgumentException("Invalid cell state: " + cell.getState());

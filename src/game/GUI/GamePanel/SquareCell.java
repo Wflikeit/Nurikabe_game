@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class SquareCell implements GameBoardCell {
 
     public static class SquareClickListener extends MouseAdapter implements GameBoardCell {
         public final Square square;
-        private List<Integer> cellsClickedIndexes;
+        private List<Integer> cellsClickedIndexes = new ArrayList<>();
 
         public SquareClickListener(Square square, List<Integer> cellsClickedIndexes) {
             this.square = square;
@@ -58,8 +59,8 @@ public class SquareCell implements GameBoardCell {
         }
         @Override
         public void mousePressed(MouseEvent e) {
+//            System.out.println(square.cell.getLoc());
             square.changeColorForwards();
-            square.cell.updateState();
             SquareCell.SquareClickListener.Square square = (SquareCell.SquareClickListener.Square) e.getSource();
             cellsClickedIndexes.add(square.index);
 //            System.out.println(Arrays.toString(cellsClickedIndexes.toArray()));
@@ -74,10 +75,10 @@ public class SquareCell implements GameBoardCell {
             return square;
         }
 
-        static class Square extends JPanel {
+        public static class Square extends JPanel {
             public int index;
             Color color;
-            Cell cell;
+            public Cell cell;
 
             public Square(Cell cell, int index) {
                 setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -92,27 +93,22 @@ public class SquareCell implements GameBoardCell {
             public void changeColorBackwards(){
                 if (Objects.equals(color, ColorsEnum.BUTTON_COLOR_2.getColor())) {
                     setColor(Color.BLACK);
-//                square.cell.setState(1);
-//                System.out.println(cell.getState());
-
                 } else if (color == Color.BLACK) {
                     setColor(Color.WHITE);
-//                square.cell.setState(1);
-//                System.out.println(cell.getState());
                 }else if(color == Color.WHITE){
                     setColor(ColorsEnum.BUTTON_COLOR_2.getColor());
                 }
+                cell.stepBack();
             }
             public void changeColorForwards(){
                 if (color == Color.WHITE) {
                     setColor(Color.BLACK);
-
                 } else if (Objects.equals(color, ColorsEnum.BUTTON_COLOR_2.getColor())) {
                     setColor(Color.WHITE);
-
                 } else if (color == Color.BLACK) {
                     setColor(ColorsEnum.BUTTON_COLOR_2.getColor());
                 }
+                cell.updateState();
             }
         }
     }

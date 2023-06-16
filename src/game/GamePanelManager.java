@@ -10,6 +10,7 @@ public class GamePanelManager {
     private final GamePanel gamePanel;
     private  BoardGenerator boardGenerator;
 
+
     public GamePanelManager(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         setupButtonListeners();
@@ -22,7 +23,6 @@ public class GamePanelManager {
         JPanel boardPanel = new JPanel();
 
         System.out.println(nurikabeBoardPanel);
-
         boardGenerator = new BoardGenerator(boardPanel, nurikabeBoardPanel, size);
         boardPanel.setLayout(new GridLayout(size, size));
         gamePanel.add(boardPanel, BorderLayout.CENTER);
@@ -61,7 +61,6 @@ public class GamePanelManager {
 
     private void handleStepBack() {
         // Logic for stepping back in the game
-//        gamePanel.gameManager.showMenuPanel();
         boardGenerator.performCellStepBack();
     }
 
@@ -70,6 +69,8 @@ public class GamePanelManager {
     }
     public void handleCheckGame() {
         // Logic for checking the game state
+//        boardGenerator.visibleSolver.solve();
+        System.out.println(boardGenerator.solver.CheckSolved());
     }
 
 }
