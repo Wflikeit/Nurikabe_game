@@ -7,6 +7,7 @@ import java.io.File;
 
 public class FileChooser {
     private final Menu menu;
+    private File selectedFile;
 
     public FileChooser(Menu menu) {
         this.menu = menu;
@@ -25,7 +26,7 @@ public class FileChooser {
                 JFileChooser fileChooser = new JFileChooser(directoryPath);
                 int result = fileChooser.showOpenDialog(null);
                 if (result == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
+                    selectedFile = fileChooser.getSelectedFile();
                     JOptionPane.showMessageDialog(null, "Selected file: " + selectedFile.getAbsolutePath());
                 } else if (result == JFileChooser.CANCEL_OPTION) {
                     JOptionPane.showMessageDialog(null, "File selection cancelled");
@@ -37,5 +38,11 @@ public class FileChooser {
                 JOptionPane.showMessageDialog(optionPane, "No records of game found");
             }
         }
+    }
+    public String getSelectedFilePath(){
+        if(selectedFile!=null) {
+            return selectedFile.getAbsolutePath();
+        }
+        return "";
     }
 }

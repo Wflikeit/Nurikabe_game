@@ -64,14 +64,9 @@ public class PausePanel extends JPanel {
         );
         button1.addActionListener(e -> gameManager.backToGame());
         button2.addActionListener(e -> gameManager.saveBoardForHuman());
-        button3.addActionListener(e -> {
-//            JOptionPane.showMessageDialog(null, sizeJComboBox, "Select Size", JOptionPane.PLAIN_MESSAGE);
-
-            gameManager.showGamePanel();
-        });
+        button3.addActionListener(e -> gameManager.showSolution());
         button4.addActionListener(e -> {
 //            JOptionPane.showMessageDialog(null, sizeJComboBox, "Select Size", JOptionPane.PLAIN_MESSAGE);
-
             gameManager.showMenuPanel();
         });
 

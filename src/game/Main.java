@@ -14,7 +14,6 @@ public class Main extends JFrame {
         ImageIcon appLogo = new ImageIcon("src/gameResources/nurikabe.png");
         setIconImage(appLogo.getImage());
         setLocationRelativeTo(null);
-
     }
 
     public static void main(String[] args) {

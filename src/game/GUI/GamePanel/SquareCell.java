@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.List;
 
@@ -25,10 +24,11 @@ public class SquareCell implements GameBoardCell {
         this.state = state;
         square = new SquareClickListener.Square(cell, index);
         squareClickListener = new SquareClickListener(square);
-
-
-        square.setColor(Color.WHITE);
-//        square.addMouseListener(new SquareClickListener(square));
+        switch (state) {
+            case 0 -> square.setColor(Color.WHITE);
+            case 1 -> square.setColor(Color.BLACK);
+            case 2 -> square.setColor(ColorsEnum.BUTTON_COLOR_2.getColor());
+        }
     }
 
     @Override
@@ -36,11 +36,6 @@ public class SquareCell implements GameBoardCell {
         return square;
     }
 
-//    public int getUpdatedState(int newState) {
-//        state = newState;
-//        square.cell.setState(newState);
-//        return cell.getState();
-//    }
     // Add a method to get the SquareClickListener instance
     public SquareClickListener getSquareClickListener() {
         return squareClickListener;
@@ -48,7 +43,7 @@ public class SquareCell implements GameBoardCell {
 
     public static class SquareClickListener extends MouseAdapter implements GameBoardCell {
         public final Square square;
-        private List<Integer> cellsClickedIndexes = new ArrayList<>();
+        private List<Integer> cellsClickedIndexes;
 
         public SquareClickListener(Square square, List<Integer> cellsClickedIndexes) {
             this.square = square;
@@ -59,15 +54,10 @@ public class SquareCell implements GameBoardCell {
         }
         @Override
         public void mousePressed(MouseEvent e) {
-//            System.out.println(square.cell.getLoc());
             square.changeColorForwards();
+            square.cell.updateState();
             SquareCell.SquareClickListener.Square square = (SquareCell.SquareClickListener.Square) e.getSource();
             cellsClickedIndexes.add(square.index);
-//            System.out.println(Arrays.toString(cellsClickedIndexes.toArray()));
-        }
-
-        public Square getSquare() {
-            return square;
         }
 
         @Override
@@ -75,10 +65,10 @@ public class SquareCell implements GameBoardCell {
             return square;
         }
 
-        public static class Square extends JPanel {
+        static class Square extends JPanel {
             public int index;
             Color color;
-            public Cell cell;
+            Cell cell;
 
             public Square(Cell cell, int index) {
                 setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -93,37 +83,24 @@ public class SquareCell implements GameBoardCell {
             public void changeColorBackwards(){
                 if (Objects.equals(color, ColorsEnum.BUTTON_COLOR_2.getColor())) {
                     setColor(Color.BLACK);
+
                 } else if (color == Color.BLACK) {
                     setColor(Color.WHITE);
                 }else if(color == Color.WHITE){
                     setColor(ColorsEnum.BUTTON_COLOR_2.getColor());
                 }
-                cell.stepBack();
             }
             public void changeColorForwards(){
                 if (color == Color.WHITE) {
                     setColor(Color.BLACK);
+
                 } else if (Objects.equals(color, ColorsEnum.BUTTON_COLOR_2.getColor())) {
                     setColor(Color.WHITE);
+
                 } else if (color == Color.BLACK) {
                     setColor(ColorsEnum.BUTTON_COLOR_2.getColor());
                 }
-                cell.updateState();
             }
         }
     }
 }
-//class SquareCellClickListener extends MouseAdapter {
-//    private List<Integer> clickEvents;
-//
-//    public SquareCellClickListener(List<Integer> clickEvents) {
-//        this.clickEvents = clickEvents;
-//    }
-//
-//    @Override
-//    public void mouseClicked(MouseEvent e) {
-//        SquareCell.SquareClickListener.Square square = (SquareCell.SquareClickListener.Square) e.getSource();
-//        clickEvents.add(square.index);
-//        System.out.println(Arrays.toString(clickEvents.toArray()));
-//    }
-//}

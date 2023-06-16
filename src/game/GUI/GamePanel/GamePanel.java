@@ -103,7 +103,7 @@ public class GamePanel extends JPanel {
             timerLabel.setText(formattedTime);
         }
 
-        private String getTime() {
+        public String getTime() {
             long currentTime = System.currentTimeMillis();
             elapsedTime = currentTime - startTime;
 
@@ -131,6 +131,15 @@ public class GamePanel extends JPanel {
         public void resetTimer() {
             startTime = System.currentTimeMillis(); // Reset the start time to the current time
             elapsedTime = 0; // Reset the elapsed time
+        }
+
+        public void setTimer(int[] time) {
+            long hours = (time[0]* 10L +time[1])*1000*3600;
+            long minutes = (time[3]* 10L +time[4])*1000*60;
+            long seconds = (time[6]* 10L +time[7])*1000;
+            long miliseconds = time[9]* 100L +time[10]* 10L +time[11];
+            elapsedTime =hours+minutes+seconds+miliseconds;
+            isRunning = false;
         }
     }
 }
