@@ -15,6 +15,7 @@ The Nurikabe Game is a <b>Java-based</b> puzzle game created using <b>Swing</b>.
 <p align="center">
   <img src="readme/pause_menu.PNG" style="width: 40%;">
 </p>
+
 ## Features
 
 - Interactive GUI created with Java Swing.
